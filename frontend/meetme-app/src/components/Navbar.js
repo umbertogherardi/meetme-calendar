@@ -1,20 +1,26 @@
+import { NavLink } from 'react-router-dom';
+import { BASE_URL } from '../utils';
+
 function Navbar() {
     return (
         <nav className="navbar navbar-expand-lg bg-dark border-bottom border-body" data-bs-theme="dark">
             <div className="container-fluid">
-                <span class="navbar-brand">MeetMe</span>
+                <span className="navbar-brand">MeetMe</span>
                 <ul className="navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link active" href="#">Home</a>
+                    <li className="nav-item">
+                        <NavLink to={BASE_URL} style={{ textDecoration: 'none'}} className="nav-link">Home</NavLink>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Calendar</a>
+                    <li className="nav-item">
+                        <NavLink to={`${BASE_URL}/login`} style={{ textDecoration: 'none'}} className="nav-link">Login</NavLink>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Contacts</a>
+                    <li className="nav-item">
+                        <NavLink to={`${BASE_URL}/calendar`} style={{ textDecoration: 'none'}} className="nav-link">Calendar</NavLink>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Settings</a>
+                    <li className="nav-item">
+                        <NavLink to={`${BASE_URL}/contacts`} style={{ textDecoration: 'none'}} className="nav-link">Contacts</NavLink>
+                    </li>
+                    <li className="nav-item">
+                        <NavLink to={`${BASE_URL}/settings`} style={{ textDecoration: 'none'}} className="nav-link">Settings</NavLink>
                     </li>
                 </ul>
             </div>
