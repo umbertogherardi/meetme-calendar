@@ -1,4 +1,4 @@
-import { BASE_URL } from "../utils";
+import { FRONTEND_URL } from "../utils";
 import { Link } from "react-router-dom";
 
 function SignUpForm() {
@@ -20,7 +20,7 @@ function SignUpForm() {
                 <button type="submit" className="btn btn-secondary">Sign Up</button>
             </form>
             <div style={{textAlign: 'center',  marginTop: '2rem'}}>
-                <span>Already have a MeetMe account? </span><Link to={`${BASE_URL}/login`}>Login</Link>
+                <span>Already have a MeetMe account? </span><Link to={`${FRONTEND_URL}/login`}>Login</Link>
             </div>
         </>
 

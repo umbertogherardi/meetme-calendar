@@ -1,5 +1,5 @@
 import { NavLink } from 'react-router-dom';
-import { BASE_URL } from '../utils';
+import { FRONTEND_URL } from '../utils';
 
 function Navbar() {
     return (
@@ -8,19 +8,19 @@ function Navbar() {
                 <span className="navbar-brand">MeetMe</span>
                 <ul className="navbar-nav">
                     <li className="nav-item">
-                        <NavLink to={BASE_URL} style={{ textDecoration: 'none'}} className="nav-link">Home</NavLink>
+                        <NavLink to={FRONTEND_URL} style={{ textDecoration: 'none'}} className="nav-link">Home</NavLink>
                     </li>
                     <li className="nav-item">
-                        <NavLink to={`${BASE_URL}/login`} style={{ textDecoration: 'none'}} className="nav-link">Login</NavLink>
+                        <NavLink to={`${FRONTEND_URL}/login`} style={{ textDecoration: 'none'}} className="nav-link">Login</NavLink>
                     </li>
                     <li className="nav-item">
-                        <NavLink to={`${BASE_URL}/calendar`} style={{ textDecoration: 'none'}} className="nav-link">Calendar</NavLink>
+                        <NavLink to={`${FRONTEND_URL}/calendar/month`} style={{ textDecoration: 'none'}} className="nav-link">Calendar</NavLink>
                     </li>
                     <li className="nav-item">
-                        <NavLink to={`${BASE_URL}/contacts`} style={{ textDecoration: 'none'}} className="nav-link">Contacts</NavLink>
+                        <NavLink to={`${FRONTEND_URL}/contacts`} style={{ textDecoration: 'none'}} className="nav-link">Contacts</NavLink>
                     </li>
                     <li className="nav-item">
-                        <NavLink to={`${BASE_URL}/settings`} style={{ textDecoration: 'none'}} className="nav-link">Settings</NavLink>
+                        <NavLink to={`${FRONTEND_URL}/settings`} style={{ textDecoration: 'none'}} className="nav-link">Settings</NavLink>
                     </li>
                 </ul>
             </div>

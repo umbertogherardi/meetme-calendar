@@ -6,10 +6,13 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import LoginForm from './components/LoginForm';
 import SignUpForm from './components/SignUpForm';
-import Calendar from './components/Calendar';
+import MonthView from './components/MonthView';
 import Contacts from './components/Contacts';
 import Settings from './components/Settings';
 import Home from './components/Home';
+import CalendarBar from './components/CalendarBar';
+import WeekView from './components/WeekView';
+import DayView from './components/DayView';
 
 const router = createBrowserRouter([
   {
@@ -30,7 +33,21 @@ const router = createBrowserRouter([
       },
       {
         path: "/calendar",
-        element: <Calendar />
+        element: <CalendarBar />,
+        children: [
+          {
+            path: "month",
+            element: <MonthView />
+          },
+          {
+            path: "week",
+            element: <WeekView />
+          },
+          {
+            path: "day",
+            element: <DayView />
+          }
+        ]
       },
       {
         path: "/contacts",

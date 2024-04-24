@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { BASE_URL } from '../utils';
+import { FRONTEND_URL } from '../utils';
 
 function LoginForm() {
     return (
@@ -19,7 +19,7 @@ function LoginForm() {
                 <button type="submit" className="btn btn-secondary">Login</button>
             </form>
             <div style={{textAlign: 'center',  marginTop: '2rem'}}>
-                <span>Don't have a MeetMe account? </span><Link to={`${BASE_URL}/sign-up`}>Sign Up</Link>
+                <span>Don't have a MeetMe account? </span><Link to={`${FRONTEND_URL}/sign-up`}>Sign Up</Link>
             </div>
         </>
 
