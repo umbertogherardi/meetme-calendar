@@ -30,6 +30,7 @@ function MonthView() {
         monthInc = 0;
         setDaysInMonth(moment().subtract(++monthDec, 'months').daysInMonth());
         setFirstDayOfMonth(moment().subtract(monthDec, 'months').startOf('month').day());
+        console.log(monthInc, monthDec);
     }
 
     function incrementView() {
@@ -43,9 +44,12 @@ function MonthView() {
         monthDec = 0;
         setDaysInMonth(moment().add(++monthInc, 'months').daysInMonth());
         setFirstDayOfMonth(moment().add(monthInc, 'months').startOf('month').day());
+        console.log(monthInc, monthDec);
     }
 
     function viewToday() {
+        monthInc = 0;
+        monthDec = 0;
         setYear(moment().year());
         setMonth(moment().month());
         setDaysInMonth(moment().daysInMonth());
