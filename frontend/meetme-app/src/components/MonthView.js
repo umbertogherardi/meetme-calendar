@@ -55,7 +55,7 @@ function MonthView() {
     function setDayNumberings() {
         let dayNumberings = [];
         let nIdx = 1;
-    
+        
         // buffer the beginning of our numberings
         for (nIdx = 1; nIdx <= firstDayOfMonth; nIdx++) {
             dayNumberings.push(-nIdx);
@@ -64,19 +64,34 @@ function MonthView() {
             dayNumberings.push(pIdx);
         }
         // pad the last of our numberings
-        while(dayNumberings.length < 35) {
-            dayNumberings.push(-nIdx);
-            nIdx++;
+        if ((firstDayOfMonth + daysInMonth) > 35){
+            while (dayNumberings.length < 42) {
+                dayNumberings.push(-nIdx);
+                nIdx++;
+            }
+        } else {
+            while (dayNumberings.length < 35) {
+                dayNumberings.push(-nIdx);
+                nIdx++;
+            }
         }
     
         return dayNumberings;
+    }
+
+    function setStartIdxs() {
+        if ((firstDayOfMonth + daysInMonth) > 35) {
+            return [0, 7, 14, 21, 28, 35];
+        } else {
+            return [0, 7, 14, 21, 28];
+        }
     }
 
     function addEvent(e){
         console.log(e.target);
     }
 
-    const ROW_START_IDXS = [0, 7, 14, 21, 28];
+    let rowStartIdxs = setStartIdxs();
     let dayNumberings = setDayNumberings();
 
     return (
@@ -143,7 +158,7 @@ function MonthView() {
                     Saturday
                 </div>
             </div>
-            {ROW_START_IDXS.map((index) => (
+            {rowStartIdxs.map((index) => (
                 <div className="row" key={index}>
                     {dayNumberings.slice(index, index + 7).map((dayNumber) => (
                         ((year === CURR_YEAR) && (month === CURR_MONTH) && (dayNumber === CURR_DAY)) ?
