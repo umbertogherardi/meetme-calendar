@@ -2,7 +2,7 @@ import 'bootstrap/dist/js/bootstrap.bundle';
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import { FRONTEND_URL, MONTH_ARR } from '../utils';
-import moment from "moment";
+import moment from 'moment';
 
 let monthDec = 0;
 let monthInc = 0;
@@ -13,7 +13,7 @@ function MonthView() {
     const [daysInMonth, setDaysInMonth] = useState(moment().daysInMonth());
     const [firstDayOfMonth, setFirstDayOfMonth] = useState(moment().startOf('month').day());
 
-    const [view, setView] = useState("Month");
+    const VIEW = "Month";
 
     const CURR_YEAR = moment().year();
     const CURR_MONTH = moment().month();
@@ -122,12 +122,12 @@ function MonthView() {
                     <li className="nav-item">
                         <div className="dropdown">
                             <button className="btn btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                {view}
+                                {VIEW}
                             </button>
                             <ul className="dropdown-menu">
-                                <li><Link to={`${FRONTEND_URL}/calendar/month`} className="dropdown-item" onClick={() => setView("Month")}>Month</Link></li>
-                                <li><Link to={`${FRONTEND_URL}/calendar/week`} className="dropdown-item" onClick={() => setView("Week")}>Week</Link></li>
-                                <li><Link to={`${FRONTEND_URL}/calendar/day`} className="dropdown-item" onClick={() => setView("Day")}>Day</Link></li>
+                                <li><Link to={`${FRONTEND_URL}/calendar/month`} className="dropdown-item">Month</Link></li>
+                                <li><Link to={`${FRONTEND_URL}/calendar/week`} className="dropdown-item">Week</Link></li>
+                                <li><Link to={`${FRONTEND_URL}/calendar/day`} className="dropdown-item">Day</Link></li>
                             </ul>
                         </div>
                     </li>
