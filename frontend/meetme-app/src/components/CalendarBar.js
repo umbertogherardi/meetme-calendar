@@ -4,11 +4,9 @@ import { FRONTEND_URL } from '../utils';
 
 
 function CalendarBar() {
-    
-    
+    // TODO: Refactor calendar bars for each view into this component
     return (
         <>
-            
             <Outlet />
         </>
     );
