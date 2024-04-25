@@ -6,7 +6,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import LoginForm from './components/LoginForm';
 import SignUpForm from './components/SignUpForm';
-import MonthView from './components/MonthView';
+import MonthView, { loadMonthData } from './components/MonthView';
 import Contacts from './components/Contacts';
 import Settings from './components/Settings';
 import Home from './components/Home';
@@ -37,7 +37,8 @@ const router = createBrowserRouter([
         children: [
           {
             path: "month",
-            element: <MonthView />
+            element: <MonthView />,
+            loader: loadMonthData
           },
           {
             path: "week",
