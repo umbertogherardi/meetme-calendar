@@ -10,12 +10,14 @@ let monthInc = 0;
 function MonthView() {
     const [year, setYear] = useState(moment().year());
     const [month, setMonth] = useState(moment().month());
-    const [day, setDay] = useState(moment().date());
     const [daysInMonth, setDaysInMonth] = useState(moment().daysInMonth());
     const [firstDayOfMonth, setFirstDayOfMonth] = useState(moment().startOf('month').day());
 
     const [view, setView] = useState("Month");
+
+    const CURR_YEAR = moment().year();
     const CURR_MONTH = moment().month();
+    const CURR_DAY = moment().date();
 
     function decrementView() {
         if (month === 0) {
@@ -41,6 +43,13 @@ function MonthView() {
         monthDec = 0;
         setDaysInMonth(moment().add(++monthInc, 'months').daysInMonth());
         setFirstDayOfMonth(moment().add(monthInc, 'months').startOf('month').day());
+    }
+
+    function viewToday() {
+        setYear(moment().year());
+        setMonth(moment().month());
+        setDaysInMonth(moment().daysInMonth());
+        setFirstDayOfMonth(moment().startOf('month').day());
     }
 
     function setDayNumberings() {
@@ -77,6 +86,11 @@ function MonthView() {
                 <span className="navbar-brand">{`${MONTH_ARR[month]} ${year}`}</span>
                 <ul className="navbar-nav">
                     <li className="nav-item">
+                        <button className="btn btn-light" type="button" onClick={viewToday}>
+                            Today
+                        </button>
+                    </li>
+                    <li className="nav-item">
                         <button className="btn btn-light" type="button" onClick={decrementView}>
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-arrow-left" viewBox="0 0 16 16">
                                 <path fillRule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8"/>
@@ -106,7 +120,7 @@ function MonthView() {
             </div>
         </nav>
         <div className="container text-center">
-            <div className="row" style={{margin: "1rem 0 1rem 0"}}>
+            <div className="row" style={{margin: "2vh 0 2vh 0"}}>
                 <div className="col">
                     Sunday
                 </div>
@@ -132,14 +146,14 @@ function MonthView() {
             {ROW_START_IDXS.map((index) => (
                 <div className="row" key={index}>
                     {dayNumberings.slice(index, index + 7).map((dayNumber) => (
-                        ((dayNumber === day) && (CURR_MONTH === month)) ?
-                        <div className="col border" key={dayNumber} id={dayNumber} style={{height: "6rem"}} onClick={addEvent}>
+                        ((year === CURR_YEAR) && (month === CURR_MONTH) && (dayNumber === CURR_DAY)) ?
+                        <div className="col border" key={dayNumber} id={dayNumber} style={{height: "14vh"}} onClick={addEvent}>
                             <div style={{color: "white", backgroundColor: "#2596BE", borderRadius: "16px", display: "flex", justifyContent: "center", width: "2rem", margin: "auto", padding: "4px"}}>
                                 {dayNumber}
                             </div>
                         </div>
                         :
-                        <div className="col border" key={dayNumber} id={dayNumber} style={{height: "6rem"}} onClick={addEvent}>
+                        <div className="col border" key={dayNumber} id={dayNumber} style={{height: "14vh"}} onClick={addEvent}>
                             <div style={{padding: "4px"}}> 
                                 {dayNumber > 0 ? dayNumber : ""}
                             </div>
