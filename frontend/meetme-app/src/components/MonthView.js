@@ -164,20 +164,20 @@ function MonthView() {
                 <div className="row" key={index}>
                     {dayNumberings.slice(index, index + 7).map((dayNumber) => (
                         ((year === CURR_YEAR) && (month === CURR_MONTH) && (dayNumber === CURR_DAY)) ?
-                        <div className="col border" key={dayNumber} id={dayNumber} style={{height: "14vh"}} data-bs-toggle="modal" data-bs-target="#eventModal" onClick={event => setEventDay(event.target.id)}>
+                        <div className="col border" key={dayNumber} id={dayNumber} style={{ height: (rowStartIdxs.length === 5) ? "15vh" : "12.5vh"}} data-bs-toggle="modal" data-bs-target="#eventModal" onClick={event => setEventDay(event.target.id)}>
                             <div style={{color: "white", backgroundColor: "#2596BE", borderRadius: "16px", display: "flex", justifyContent: "center", width: "2rem", margin: "auto", padding: "4px", pointerEvents: "none"}}>
                                 {dayNumber}
                             </div>
                         </div>
                         :
                         (dayNumber > 0) ?
-                        <div className="col border" key={dayNumber} id={dayNumber} style={{height: "14vh"}} data-bs-toggle="modal" data-bs-target="#eventModal" onClick={event => setEventDay(event.target.id)}>
+                        <div className="col border" key={dayNumber} id={dayNumber} style={{height: (rowStartIdxs.length === 5) ? "15vh" : "12.5vh"}} data-bs-toggle="modal" data-bs-target="#eventModal" onClick={event => setEventDay(event.target.id)}>
                             <div style={{padding: "4px", pointerEvents: "none"}}> 
                                 {dayNumber}
                             </div>
                         </div>
                         :
-                        <div className="col border" key={dayNumber} id={dayNumber} style={{height: "14vh"}}>
+                        <div className="col border" key={dayNumber} id={dayNumber} style={{height: (rowStartIdxs.length === 5) ? "15vh" : "12.5vh"}}>
                             <div style={{padding: "4px"}}> 
                                 {""}
                             </div>
