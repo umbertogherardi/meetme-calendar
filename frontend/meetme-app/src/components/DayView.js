@@ -1,7 +1,7 @@
 import 'bootstrap/dist/js/bootstrap.bundle';
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
-import { FRONTEND_URL, MONTH_ARR } from '../utils';
+import { FRONTEND_URL, MONTHS } from '../utils';
 import moment from 'moment';
 
 function DayView() {
@@ -34,7 +34,7 @@ function DayView() {
     <>
         <nav className="navbar navbar-expand-lg bg-light border-bottom border-body" data-bs-theme="light" style={{padding: "1rem 6rem"}}>
             <div className="container-fluid">
-                <span className="navbar-brand">{`${MONTH_ARR[month]} ${year}`}</span>
+                <span className="navbar-brand">{`${MONTHS[month]} ${year}`}</span>
                 <ul className="navbar-nav">
                     <li className="nav-item">
                         <button className="btn btn-light" type="button" onClick={viewToday}>

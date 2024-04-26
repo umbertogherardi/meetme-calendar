@@ -1,7 +1,7 @@
 import 'bootstrap/dist/js/bootstrap.bundle';
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
-import { FRONTEND_URL, MONTH_ARR } from '../utils';
+import { FRONTEND_URL, MONTHS, WEEKDAYS } from '../utils';
 import moment from 'moment';
 
 let monthDec = 0;
@@ -116,7 +116,7 @@ function MonthView() {
     <>
         <nav className="navbar navbar-expand-lg bg-light border-bottom border-body" data-bs-theme="light" style={{padding: "1rem 6rem"}}>
             <div className="container-fluid">
-                <span className="navbar-brand">{`${MONTH_ARR[month]} ${year}`}</span>
+                <span className="navbar-brand">{`${MONTHS[month]} ${year}`}</span>
                 <ul className="navbar-nav">
                     <li className="nav-item">
                         <button className="btn btn-light" type="button" onClick={viewToday}>
@@ -154,27 +154,11 @@ function MonthView() {
         </nav>
         <div className="container text-center">
             <div className="row" style={{margin: "2vh 0 2vh 0"}}>
-                <div className="col">
-                    Sunday
-                </div>
-                <div className="col">
-                    Monday
-                </div>
-                <div className="col">
-                    Tuesday
-                </div>
-                <div className="col">
-                    Wednesday
-                </div>
-                <div className="col">
-                    Thursday
-                </div>
-                <div className="col">
-                    Friday
-                </div>
-                <div className="col">
-                    Saturday
-                </div>
+                {WEEKDAYS.map((weekday) => (
+                    <div className="col">
+                        {weekday}
+                    </div>    
+                ))}
             </div>
             {rowStartIdxs.map((index) => (
                 <div className="row" key={index}>
@@ -206,7 +190,7 @@ function MonthView() {
             <div className="modal-dialog">
                 <div className="modal-content">
                 <div className="modal-header">
-                    <h1 className="modal-title fs-5" id="eventModalLabel">{`${MONTH_ARR[month]} ${eventDay}, ${year} Event`}</h1>
+                    <h1 className="modal-title fs-5" id="eventModalLabel">{`${MONTHS[month]} ${eventDay}, ${year} Event`}</h1>
                     <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div className="modal-body">
