@@ -6,7 +6,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import LoginForm from './components/LoginForm';
 import SignUpForm from './components/SignUpForm';
-import MonthView from './components/MonthView';
+import MonthView, { loadEventData } from './components/MonthView';
 import Contacts from './components/Contacts';
 import Settings from './components/Settings';
 import Home from './components/Home';
@@ -31,11 +31,12 @@ const router = createBrowserRouter([
         element: <SignUpForm />
       },
       {
-        path: "/calendar",
+        path: "/calendar/year/:year",
         children: [
           {
-            path: "month",
-            element: <MonthView />
+            path: "month/:month",
+            element: <MonthView />,
+            loader: loadEventData
           },
           {
             path: "week",
