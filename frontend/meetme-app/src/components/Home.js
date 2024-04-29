@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { FRONTEND_URL } from "../utils";
 
-function Home() {
+function Home() {    
     return (
         <div style={{margin: '3rem'}}>
             <h3>Welcome to MeetMe</h3>
