@@ -1,6 +1,5 @@
 import { NavLink } from 'react-router-dom';
-import { FRONTEND_URL } from '../utils';
-import moment from 'moment';
+import { FRONTEND_URL, CURR_YEAR, CURR_MONTH, CURR_DAY } from '../../utils';
 
 function Navbar() {
     return (
@@ -15,7 +14,7 @@ function Navbar() {
                         <NavLink to={`${FRONTEND_URL}/login`} style={{ textDecoration: 'none'}} className="nav-link">Login</NavLink>
                     </li>
                     <li className="nav-item">
-                        <NavLink to={`${FRONTEND_URL}/calendar/year/${moment().year()}/month/${moment().month()}`} style={{ textDecoration: 'none'}} className="nav-link">Calendar</NavLink>
+                        <NavLink to={`${FRONTEND_URL}/calendar/month/${CURR_YEAR}/${CURR_MONTH}/${CURR_DAY}`} style={{ textDecoration: 'none'}} className="nav-link">Calendar</NavLink>
                     </li>
                     <li className="nav-item">
                         <NavLink to={`${FRONTEND_URL}/contacts`} style={{ textDecoration: 'none'}} className="nav-link">Contacts</NavLink>
