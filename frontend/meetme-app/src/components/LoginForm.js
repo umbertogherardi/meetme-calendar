@@ -13,15 +13,23 @@ function LoginForm() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        
+
+
+        // const isLoggedIn = sessionStorage.getItem('isLoggedIn');
+        // const confirmLogout = false
+        // isLoggedIn ? (confirmLogout = window.confirm('Are you sure you want to logout?')) : confirmLogout = false;
+
         try {
             const response = await axios.post('http://localhost:3001/auth/login', { username, password });
             // Handle successful login (e.g., redirect user)
             console.log(response.data);
+            sessionStorage.setItem('isLoggedIn', true);
+            // alert('isLoggedIn: ' + sessionStorage.getItem('isLoggedIn'));
+            
             alert("WORKS")
             // Redirect user to another page (e.g., home page)
             // STILL NEED TO REDIRECT TO THE CORRECT PAGE!!!
-            navigate('/'); // need to navigate to the corresponding page here... TODO
+            navigate('/calendar/month'); // need to navigate to the corresponding page here... TODO
         } catch (error) {
             setError('Invalid username or password');
         }
@@ -52,3 +60,5 @@ function LoginForm() {
 }
 
 export default LoginForm;
+
+

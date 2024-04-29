@@ -1,27 +1,49 @@
-import { NavLink } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
 import { FRONTEND_URL } from '../utils';
+import { useState, useEffect } from 'react';
 
 function Navbar() {
+    const location = useLocation();
+    const { pathname } = location;
+
+    // Check if the user is logged in
+    const isLoggedIn = sessionStorage.getItem('isLoggedIn');
+
+    const tabs = [
+        { path: '/calendar/month', label: 'Calendar' },
+        { path: '/contacts', label: 'Contacts' },
+        { path: '/settings', label: 'Settings' },
+        // { path: '/', label: isLoggedIn ? 'Logout' : 'Login' }
+        { path: '/logout', label: 'Logout'}
+    ];
+
+    // Dont think this function is necessary
+    const handleLogout = () => {
+        const confirmLogout = window.confirm('Are you sure you want to logout?');
+        if (confirmLogout) {
+            sessionStorage.removeItem('isLoggedIn');
+            window.location.reload();
+        }
+    };
+
     return (
         <nav className="navbar navbar-expand-lg bg-dark border-bottom border-body" data-bs-theme="dark">
             <div className="container-fluid">
                 <span className="navbar-brand">MeetMe</span>
                 <ul className="navbar-nav">
-                    <li className="nav-item">
-                        <NavLink to={FRONTEND_URL} style={{ textDecoration: 'none'}} className="nav-link">Home</NavLink>
-                    </li>
-                    <li className="nav-item">
-                        <NavLink to={`${FRONTEND_URL}/login`} style={{ textDecoration: 'none'}} className="nav-link">Login</NavLink>
-                    </li>
-                    <li className="nav-item">
-                        <NavLink to={`${FRONTEND_URL}/calendar/month`} style={{ textDecoration: 'none'}} className="nav-link">Calendar</NavLink>
-                    </li>
-                    <li className="nav-item">
-                        <NavLink to={`${FRONTEND_URL}/contacts`} style={{ textDecoration: 'none'}} className="nav-link">Contacts</NavLink>
-                    </li>
-                    <li className="nav-item">
-                        <NavLink to={`${FRONTEND_URL}/settings`} style={{ textDecoration: 'none'}} className="nav-link">Settings</NavLink>
-                    </li>
+                    {/* Render tabs based on the current route */}
+                    {tabs.map(tab => (
+                        <li className="nav-item" key={tab.path}>
+                            {/* Conditionally render tabs except on login page, home, or signup */}
+                            {(pathname !== '/login' && pathname !== '/' && pathname !== '/sign-up') && (
+                                <NavLink to={tab.path} style={{ textDecoration: 'none' }} className="nav-link">{tab.label}</NavLink>
+                            )}
+                            {/* Render the Login/Logout tab only on login page or home */}
+                            {(pathname === '/login' || pathname === '/' || pathname === '/sign-up') && tab.path === '/login' && (
+                                <NavLink to={tab.path} style={{ textDecoration: 'none' }} className="nav-link" onClick={isLoggedIn ? handleLogout : null}>{tab.label}</NavLink>
+                            )}
+                        </li>
+                    ))}
                 </ul>
             </div>
         </nav>
@@ -29,3 +51,4 @@ function Navbar() {
 }
 
 export default Navbar;
+
