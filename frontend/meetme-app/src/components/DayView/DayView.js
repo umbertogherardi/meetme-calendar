@@ -1,7 +1,8 @@
 import { useLoaderData } from 'react-router-dom';
+import { WEEKDAYS, CURR_YEAR, CURR_MONTH, CURR_DAY } from '../../utils';
 import CalendarBar from '../CalendarBar/CalendarBar';
 import moment from 'moment';
-import { WEEKDAYS, CURR_YEAR, CURR_MONTH, CURR_DAY } from '../../utils';
+
 import './DayView.css'
 
 export async function loadDayEvents(request) {
@@ -36,7 +37,7 @@ function DayView() {
             {WEEKDAYS[currentMoment.day()]}
         </div>
         <div className="col border day">
-            <div className={(year === CURR_YEAR && month === CURR_MONTH && day === CURR_DAY) ? "curr-day-single" : ""}>
+            <div className={(year === CURR_YEAR && month === CURR_MONTH && day === CURR_DAY) ? "curr-day-day" : ""}>
                 {day}
             </div>
         </div>

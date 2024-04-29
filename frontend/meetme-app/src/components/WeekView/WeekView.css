@@ -1,4 +1,4 @@
-.curr-day-month {
+.curr-day-week {
     color: rgb(255, 255, 255);
     background-color: rgb(107, 202, 231);
     border-radius: 16px;
@@ -7,7 +7,6 @@
     margin: auto;
 }
 
-.weekday-header {
-    margin: 10px 0 10px 0;
-    text-align: center;
+.weekday {
+    height: 75vh;
 }

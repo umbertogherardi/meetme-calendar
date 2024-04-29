@@ -1,8 +1,9 @@
 import { useLoaderData } from 'react-router-dom';
 import { WEEKDAYS, CURR_YEAR, CURR_MONTH, CURR_DAY } from '../../utils';
+import CalendarBar from '../CalendarBar/CalendarBar';
 import moment from 'moment';
 import './MonthView.css'
-import CalendarBar from '../CalendarBar/CalendarBar';
+
 
 export async function loadMonthEvents(request) {
     /**
@@ -85,7 +86,7 @@ function MonthView() {
                     {dayVals.slice(rowIdx, rowIdx + 7).map((dayVal) => (
                         <div className="col border" style={{ height: (rowStartIdxs.length === 5) ? "15vh" : "12.5vh"}} key={`day-${dayVal}`}>
                             {/** Day Number */}
-                            <div className={(year === CURR_YEAR && month === CURR_MONTH && dayVal === CURR_DAY) ? "curr-day" : ""}>
+                            <div className={(year === CURR_YEAR && month === CURR_MONTH && dayVal === CURR_DAY) ? "curr-day-month" : ""}>
                                 {dayVal > 0 ? dayVal : ""}
                             </div>
                             {/** Events List */}

@@ -14,6 +14,7 @@ function CalendarBar(props) {
                                 moment(`${year - 1}/${12}/${day}`, "YYYY/MM/DD").daysInMonth() : 
                                 moment(`${year}/${month - 1}/${day}`, "YYYY/MM/DD").daysInMonth()
                             );
+                            
     const daysInNextMonth = (month === 12 ? 
                                 moment(`${year + 1}/${1}/${day}`, "YYYY/MM/DD").daysInMonth() : 
                                 moment(`${year}/${month + 1}/${day}`, "YYYY/MM/DD").daysInMonth()

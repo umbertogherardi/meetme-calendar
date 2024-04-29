@@ -6,11 +6,7 @@
     font-size: x-large;
 }
 
-.single-header {
-    font-size: large;
-}
-
-.curr-day-single {
+.curr-day-day {
     color: rgb(255, 255, 255);
     background-color: rgb(107, 202, 231);
     border-radius: 48px;
