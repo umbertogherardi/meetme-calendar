@@ -1,5 +1,5 @@
 import { NavLink, useLocation } from 'react-router-dom';
-import { FRONTEND_URL } from '../utils';
+import { FRONTEND_URL, CURR_YEAR, CURR_MONTH, CURR_DAY } from '../../utils';
 import { useState, useEffect } from 'react';
 
 function Navbar() {
@@ -10,7 +10,7 @@ function Navbar() {
     const isLoggedIn = sessionStorage.getItem('isLoggedIn');
 
     const tabs = [
-        { path: '/calendar/month', label: 'Calendar' },
+        { path: `/calendar/month/${CURR_YEAR}/${CURR_MONTH}/${CURR_DAY}`, label: 'Calendar' },
         { path: '/contacts', label: 'Contacts' },
         { path: '/settings', label: 'Settings' },
         // { path: '/', label: isLoggedIn ? 'Logout' : 'Login' }

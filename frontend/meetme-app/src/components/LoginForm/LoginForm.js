@@ -1,8 +1,9 @@
 import { Link } from 'react-router-dom';
-import { FRONTEND_URL } from '../utils';
+import { FRONTEND_URL, CURR_DAY, CURR_MONTH, CURR_YEAR} from '../../utils';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+
 
 function LoginForm() {
 
@@ -29,7 +30,7 @@ function LoginForm() {
             alert("WORKS")
             // Redirect user to another page (e.g., home page)
             // STILL NEED TO REDIRECT TO THE CORRECT PAGE!!!
-            navigate('/calendar/month'); // need to navigate to the corresponding page here... TODO
+            navigate(`/calendar/month/${CURR_YEAR}/${CURR_MONTH}/${CURR_DAY}`); // need to navigate to the corresponding page here... TODO
         } catch (error) {
             setError('Invalid username or password');
         }

@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { FRONTEND_URL } from "../utils";
+import { FRONTEND_URL } from "../../utils";
 
 function Home() {    
     return (
