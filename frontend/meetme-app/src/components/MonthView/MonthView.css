@@ -1,33 +1,13 @@
-.event-container {
-    color: white;
-    background-color: #2596BE;
-    font-size: small;
-    padding: 2px 6px; 
-    margin: 4px 0px; 
-    border-radius: 4px; 
-    text-align: left; 
-    text-overflow: clip; 
-    white-space: nowrap; 
-    overflow: hidden;
-    max-width: 100px !important;
-}
-
-.event-container:hover {
-    cursor: pointer;
-    background-color: #33abd6;
-}
-
-.today-cell {
-    color: white;
-    background-color: #2596BE; 
+.curr-day {
+    color: rgb(255, 255, 255);
+    background-color: rgb(107, 202, 231);
     border-radius: 16px;
-    display: flex; 
-    justify-content: center;
-    width: 2rem; 
-    margin: auto;
+    width: 2rem;
     padding: 4px;
+    margin: auto;
 }
 
-.cell {
-    padding: 4px;
+.weekday-header {
+    margin: 10px 0 10px 0;
+    text-align: center;
 }

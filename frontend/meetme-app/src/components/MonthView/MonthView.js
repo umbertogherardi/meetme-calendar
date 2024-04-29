@@ -1,5 +1,5 @@
 import { useLoaderData } from 'react-router-dom';
-import { BACKEND_URL } from '../../utils';
+import { WEEKDAYS, CURR_YEAR, CURR_MONTH, CURR_DAY } from '../../utils';
 import moment from 'moment';
 import './MonthView.css'
 import CalendarBar from '../CalendarBar/CalendarBar';
@@ -29,34 +29,33 @@ function MonthView() {
     const daysInMonth = currentMoment.daysInMonth();
     const firstDayOfMonth = currentMoment.startOf('month').day();
 
-    function setDayNumberings() {
-        let dayNumberings = [];
-        let nIdx = 1;
+    function setDayVals() {
+        let dayVals = [];
+        let bufferIdx = 1;
         
-        // buffer the beginning of our numberings
-        for (nIdx = 1; nIdx <= firstDayOfMonth; nIdx++) {
-            dayNumberings.push(-nIdx);
+        for (bufferIdx = 1; bufferIdx <= firstDayOfMonth; bufferIdx++) {
+            dayVals.push(-bufferIdx);
         }
-        for (let pIdx = 1; pIdx <= daysInMonth; pIdx++) {
-            dayNumberings.push(pIdx);
+
+        for (let dayIdx = 1; dayIdx <= daysInMonth; dayIdx++) {
+            dayVals.push(dayIdx);
         }
-        // pad the last of our numberings
+
         if ((firstDayOfMonth + daysInMonth) > 35){
-            while (dayNumberings.length < 42) {
-                dayNumberings.push(-nIdx);
-                nIdx++;
+            while (dayVals.length < 42) {
+                dayVals.push(-bufferIdx);
+                bufferIdx++;
             }
         } else {
-            while (dayNumberings.length < 35) {
-                dayNumberings.push(-nIdx);
-                nIdx++;
+            while (dayVals.length < 35) {
+                dayVals.push(-bufferIdx);
+                bufferIdx++;
             }
         }
-    
-        return dayNumberings;
+        return dayVals;
     }
 
-    function setStartIdxs() {
+    function setRowStartIdxs() {
         if ((firstDayOfMonth + daysInMonth) > 35) {
             return [0, 7, 14, 21, 28, 35];
         } else {
@@ -64,11 +63,38 @@ function MonthView() {
         }
     }
 
-    let rowStartIdxs = setStartIdxs();
-    let dayNumberings = setDayNumberings();
+    let rowStartIdxs = setRowStartIdxs();
+    let dayVals = setDayVals();
 
     return (
+        <>
         <CalendarBar year={year} month={month} day={day} viewType="Month"/>
+        <div className="container text-center">
+            {/** Weekday Headers */}
+            <div className="row weekday-header">
+            {WEEKDAYS.map((weekday) => (
+                <div className="col-sm" key={weekday}>
+                    {weekday}
+                </div>
+            ))}
+            </div>
+
+            {/** Day Cells */}
+            {rowStartIdxs.map((rowIdx) => (
+                <div className="row" key={`row-start-idx-${rowIdx}`}>
+                    {dayVals.slice(rowIdx, rowIdx + 7).map((dayVal) => (
+                        <div className="col border" style={{ height: (rowStartIdxs.length === 5) ? "15vh" : "12.5vh"}} key={`day-${dayVal}`}>
+                            {/** Day Number */}
+                            <div className={(year === CURR_YEAR && month === CURR_MONTH && dayVal === CURR_DAY) ? "curr-day" : ""}>
+                                {dayVal > 0 ? dayVal : ""}
+                            </div>
+                            {/** Events List */}
+                        </div>
+                    ))}
+                </div>
+            ))}
+        </div>
+        </>
     );
 }
 

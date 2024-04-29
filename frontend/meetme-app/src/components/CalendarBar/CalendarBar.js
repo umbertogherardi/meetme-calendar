@@ -8,7 +8,6 @@ function CalendarBar(props) {
     const month = props.month;
     const day = props.day;
     const viewType = props.viewType;
-    console.log(year, month, day);
 
     const daysInMonth = moment(`${year}/${month}/${day}`, "YYYY/MM/DD").daysInMonth();
     const daysInPrevMonth = (month === 1 ? 
@@ -23,7 +22,13 @@ function CalendarBar(props) {
     return (
         <nav className="navbar navbar-expand-lg bg-light border-bottom border-body" data-bs-theme="light" style={{padding: "1rem 6rem"}}>
             <div className="container-fluid">
-                <span className="navbar-brand">{`${MONTHS[month]} ${year}`}</span>
+                <span className="navbar-brand">{viewType === "Month" ? 
+                                                    `${MONTHS[month]} ${year}` :
+                                                    viewType === "Week" ?   
+                                                        `${MONTHS[month]} ${year}` :
+                                                        `${MONTHS[month]} ${day}, ${year}`
+                                                }
+                </span>
                 <ul className="navbar-nav">
                     <li className="nav-item">
                     <Link to={`${FRONTEND_URL}/calendar/${viewType.toLowerCase()}/${CURR_YEAR}/${CURR_MONTH}/${CURR_DAY}`}>

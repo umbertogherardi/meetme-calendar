@@ -1,0 +1,20 @@
+.day {
+    text-align: center;
+    height: 75vh;
+    width: 90vw;
+    margin: auto;
+    font-size: x-large;
+}
+
+.single-header {
+    font-size: large;
+}
+
+.curr-day-single {
+    color: rgb(255, 255, 255);
+    background-color: rgb(107, 202, 231);
+    border-radius: 48px;
+    width: 3rem;
+    padding: 6px;
+    margin: auto;
+}
