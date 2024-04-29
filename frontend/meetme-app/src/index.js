@@ -12,6 +12,7 @@ import Settings from './components/Settings/Settings';
 import Home from './components/Home/Home';
 import WeekView, { loadWeekEvents } from './components/WeekView/WeekView';
 import DayView, { loadDayEvents } from './components/DayView/DayView';
+import Logout from './components/Logout/Logout';
 
 const router = createBrowserRouter([
   {
@@ -20,11 +21,15 @@ const router = createBrowserRouter([
     children: [
       {
         path: "",
-        element: <Home />
+        element: <LoginForm />
       },
       {
         path: "/login",
         element: <LoginForm />
+      },
+      {
+        path: "/logout",
+        element: <Logout />
       },
       {
         path: "/sign-up",
