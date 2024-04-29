@@ -1,0 +1,33 @@
+.logout-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 30vh; 
+}
+
+.logout-container button {
+    margin-top: 5px;
+}
+
+.logout-container button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #007bff; 
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.logout-container button:hover {
+    background-color: #0056b3;
+}
+
+.logout-container button span {
+    display: inline-block;
+    vertical-align: middle;
+    line-height: normal;
+}
+
