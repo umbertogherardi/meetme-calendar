@@ -3,7 +3,7 @@ import { WEEKDAYS, CURR_YEAR, CURR_MONTH, CURR_DAY } from '../../utils';
 import CalendarBar from '../CalendarBar/CalendarBar';
 import moment from 'moment';
 import './MonthView.css'
-
+import { useNavigate } from 'react-router-dom';
 
 export async function loadMonthEvents(request) {
     /**
@@ -29,6 +29,13 @@ function MonthView() {
     
     const daysInMonth = currentMoment.daysInMonth();
     const firstDayOfMonth = currentMoment.startOf('month').day();
+
+    const navigate = useNavigate();
+
+    function handleAddEvent(event) {
+        const eventDay = event.target.id
+        if (event.target.id > 0) navigate(`/calendar/event-add/${year}/${month}/${eventDay}`);
+    }
 
     function setDayVals() {
         let dayVals = [];
@@ -84,7 +91,8 @@ function MonthView() {
             {rowStartIdxs.map((rowIdx) => (
                 <div className="row" key={`row-start-idx-${rowIdx}`}>
                     {dayVals.slice(rowIdx, rowIdx + 7).map((dayVal) => (
-                        <div className="col border" style={{ height: (rowStartIdxs.length === 5) ? "15vh" : "12.5vh"}} key={`day-${dayVal}`}>
+                        <div className="col border" style={{ height: (rowStartIdxs.length === 5) ? "15vh" : "12.5vh"}} key={`day-${dayVal}`}
+                        id={dayVal} onClick={event => handleAddEvent(event)}>
                             {/** Day Number */}
                             <div className={(year === CURR_YEAR && month === CURR_MONTH && dayVal === CURR_DAY) ? "curr-day-month" : ""}>
                                 {dayVal > 0 ? dayVal : ""}

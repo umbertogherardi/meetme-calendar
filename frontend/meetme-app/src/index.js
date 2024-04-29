@@ -9,10 +9,10 @@ import SignUpForm from './components/SignUpForm/SignUpForm';
 import MonthView, { loadMonthEvents } from './components/MonthView/MonthView';
 import Contacts from './components/Contacts/Contacts';
 import Settings from './components/Settings/Settings';
-import Home from './components/Home/Home';
 import WeekView, { loadWeekEvents } from './components/WeekView/WeekView';
 import DayView, { loadDayEvents } from './components/DayView/DayView';
 import Logout from './components/Logout/Logout';
+import AddEventForm from './components/AddEventForm/AddEventForm';
 
 const router = createBrowserRouter([
   {
@@ -52,7 +52,11 @@ const router = createBrowserRouter([
             path: "day/:year/:month/:day",
             element: <DayView />,
             loader: loadDayEvents
-          }
+          },
+          {
+            path: "event-add/:year/:month/:day",
+            element: <AddEventForm />
+          },
         ]
       },
       {

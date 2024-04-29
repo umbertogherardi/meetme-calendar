@@ -1,4 +1,4 @@
-import { useLoaderData } from 'react-router-dom';
+import { useLoaderData, useNavigate } from 'react-router-dom';
 import { WEEKDAYS, CURR_YEAR, CURR_MONTH, CURR_DAY } from '../../utils';
 import CalendarBar from '../CalendarBar/CalendarBar';
 import moment from 'moment';
@@ -40,13 +40,32 @@ function WeekView() {
             moment(`${year}/${month + 1}/${day}`, "YYYY/MM/DD").daysInMonth()
     );
 
+    const navigate = useNavigate();
+
+    function handleAddEvent(event) {
+        const eventDay = event.target.id;
+        // case where we add to the previous month
+        if (eventDay > (day + (6 - weekday))) {
+            navigate(`/calendar/event-add/${year}/${month - 1}/${eventDay}`);
+        }
+        // case where we add to the next month
+        else if (eventDay < (day - weekday)) {
+            navigate(`/calendar/event-add/${year}/${month + 1}/${eventDay}`);
+        }
+        // case where we add to the current month
+        else navigate(`/calendar/event-add/${year}/${month}/${eventDay}`);
+    }
+
     function setDayVals() {
         let dayVals = [];
         let firstDayOfWeek;
         let startInPrevMonth;
+
+        console.log(weekday);
         
         if ((day - weekday) <= 0) {
-            firstDayOfWeek = daysInPrevMonth - (day - weekday);
+            firstDayOfWeek = daysInPrevMonth + (day - weekday);
+            console.log(firstDayOfWeek);
             startInPrevMonth = true;
         } else {
             firstDayOfWeek = day - weekday;
@@ -73,6 +92,7 @@ function WeekView() {
     }
 
     let dayVals = setDayVals();
+    console.log(dayVals);
 
     return (
         <>
@@ -90,7 +110,7 @@ function WeekView() {
             {/** Day Cells */}
             <div className="row">
                 {dayVals.map((dayVal) => (
-                    <div className="col border weekday" key={dayVal}>
+                    <div className="col border weekday" key={dayVal} id={dayVal} onClick={event => handleAddEvent(event)}>
                         {/** Day Number */}
                         <div className={(year === CURR_YEAR && month === CURR_MONTH && dayVal === CURR_DAY) ? "curr-day-week" : ""}>
                             {dayVal}

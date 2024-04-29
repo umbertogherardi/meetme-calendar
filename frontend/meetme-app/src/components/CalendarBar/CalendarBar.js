@@ -92,7 +92,7 @@ function CalendarBar(props) {
                         </Link>
                         :
                         viewType === "Week" ?
-                        <Link to={day >= (daysInMonth - 7) ?    
+                        <Link to={day > (daysInMonth - 7) ?    
                                     month === 12 ?
                                         `${FRONTEND_URL}/calendar/week/${year + 1}/${1}/${day - (daysInMonth - 7)}` : 
                                         `${FRONTEND_URL}/calendar/week/${year}/${month + 1}/${day - (daysInMonth - 7)}` 

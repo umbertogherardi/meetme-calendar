@@ -1,4 +1,4 @@
-import { useLoaderData } from 'react-router-dom';
+import { useLoaderData, useNavigate } from 'react-router-dom';
 import { WEEKDAYS, CURR_YEAR, CURR_MONTH, CURR_DAY } from '../../utils';
 import CalendarBar from '../CalendarBar/CalendarBar';
 import moment from 'moment';
@@ -28,7 +28,12 @@ function DayView() {
     const day = currentMoment.date();
     
     const dayOfWeek = currentMoment.day();
-    console.log(dayOfWeek);
+
+    const navigate = useNavigate();
+
+    function handleAddEvent(event) {
+        navigate(`/calendar/event-add/${year}/${month}/${event.target.id}`);
+    }
 
     return (
         <>
@@ -36,7 +41,7 @@ function DayView() {
         <div className="weekday-header single-header">
             {WEEKDAYS[currentMoment.day()]}
         </div>
-        <div className="col border day">
+        <div className="col border day" id={day} onClick={event => handleAddEvent(event)}>
             <div className={(year === CURR_YEAR && month === CURR_MONTH && day === CURR_DAY) ? "curr-day-day" : ""}>
                 {day}
             </div>
