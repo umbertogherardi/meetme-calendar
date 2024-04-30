@@ -11,13 +11,13 @@ function CalendarBar(props) {
 
     const daysInMonth = moment(`${year}/${month}/${day}`, "YYYY/MM/DD").daysInMonth();
     const daysInPrevMonth = (month === 1 ? 
-                                moment(`${year - 1}/${12}/${day}`, "YYYY/MM/DD").daysInMonth() : 
-                                moment(`${year}/${month - 1}/${day}`, "YYYY/MM/DD").daysInMonth()
+                                moment(`${year - 1}/${12}`, "YYYY/MM").daysInMonth() : 
+                                moment(`${year}/${month - 1}`, "YYYY/MM").daysInMonth()
                             );
                             
     const daysInNextMonth = (month === 12 ? 
-                                moment(`${year + 1}/${1}/${day}`, "YYYY/MM/DD").daysInMonth() : 
-                                moment(`${year}/${month + 1}/${day}`, "YYYY/MM/DD").daysInMonth()
+                                moment(`${year + 1}/${1}`, "YYYY/MM").daysInMonth() : 
+                                moment(`${year}/${month + 1}`, "YYYY/MM").daysInMonth()
                             );
 
     return (
@@ -41,7 +41,15 @@ function CalendarBar(props) {
                     {/** Backward Nav Button */}
                     <li className="nav-item">
                         {viewType === "Month" ?
-                        <Link to={month === 1 ? `${FRONTEND_URL}/calendar/month/${year - 1}/${12}/${day}` : `${FRONTEND_URL}/calendar/month/${year}/${month - 1}/${day}`}>
+                        <Link to={day > daysInPrevMonth ?
+                                    month === 1 ? 
+                                        `${FRONTEND_URL}/calendar/month/${year - 1}/${12}/${daysInPrevMonth}` : 
+                                        `${FRONTEND_URL}/calendar/month/${year}/${month - 1}/${daysInPrevMonth}`
+                                    :
+                                    month === 1 ? 
+                                        `${FRONTEND_URL}/calendar/month/${year - 1}/${12}/${day}` : 
+                                        `${FRONTEND_URL}/calendar/month/${year}/${month - 1}/${day}`
+                                }>
                             <button className="btn btn-light" type="button">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-arrow-left" viewBox="0 0 16 16">
                                     <path fillRule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8"/>
@@ -83,7 +91,15 @@ function CalendarBar(props) {
                     {/** Forward Nav Button */}
                     <li className="nav-item">
                         {viewType === "Month" ?
-                        <Link to={month === 12 ? `${FRONTEND_URL}/calendar/month/${year + 1}/${1}/${day}` : `${FRONTEND_URL}/calendar/month/${year}/${month + 1}/${day}`}>
+                        <Link to={day > daysInNextMonth ?
+                                    month === 12 ? 
+                                        `${FRONTEND_URL}/calendar/month/${year + 1}/${1}/${daysInNextMonth}` : 
+                                        `${FRONTEND_URL}/calendar/month/${year}/${month + 1}/${daysInNextMonth}`
+                                    :
+                                    month === 12 ?
+                                        `${FRONTEND_URL}/calendar/month/${year + 1}/${1}/${day}` : 
+                                        `${FRONTEND_URL}/calendar/month/${year}/${month + 1}/${day}`
+                                }>
                             <button className="btn btn-light" type="button">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-arrow-right" viewBox="0 0 16 16">
                                     <path fillRule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8"/>
