@@ -2,12 +2,51 @@
     color: rgb(255, 255, 255);
     background-color: rgb(107, 202, 231);
     border-radius: 16px;
-    width: 2rem;
-    padding: 4px;
-    margin: auto;
+    width: 28px;
+    padding: 2px;
+    margin: 0 auto;
 }
 
 .weekday-header {
     margin: 10px 0 10px 0;
     text-align: center;
+}
+
+.event {
+    padding: 0 4px 0 10px;
+    display: flex;
+    gap: 6px;
+    font-size: small;
+    border-radius: 16px;
+    margin-top: 2px;
+    max-height: 20px;
+    overflow: clip;
+}
+
+.event:hover {
+    background-color: rgb(211, 211, 211);
+    transition: 0.3s;
+    cursor: pointer;
+}
+
+.event p {
+    margin: 0;
+    padding: 0;
+}
+
+.others {
+    padding-left: 10px;
+    display: flex;
+    font-size: small;
+    width: 70px;
+    margin-bottom: 8px;
+    text-decoration: none;
+    color: black;
+}
+
+.others:hover {
+    color: rgb(107, 202, 231);
+    text-decoration: underline;
+    transition: 0.3s;
+    cursor: pointer;
 }

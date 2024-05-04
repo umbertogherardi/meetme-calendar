@@ -13,12 +13,12 @@ CalendarRouter.post('/', async (req, res) => {
     }
 })
 
-CalendarRouter.get('/year/:year/month/:month', async (req, res) => {
+CalendarRouter.get('/month/:year/:month/:day', async (req, res) => {
     const db = req.app.get("db");
 
     const monthEvents = await db.collection("events")
                                 .find({ year: parseInt(req.params.year), month: parseInt(req.params.month) })
-                                .sort({}).toArray();
+                                .sort({ startTime: 1 }).toArray();
     return res.json(monthEvents);
 })
 

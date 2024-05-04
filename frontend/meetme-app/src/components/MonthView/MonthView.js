@@ -1,18 +1,15 @@
-import { useLoaderData } from 'react-router-dom';
-import { WEEKDAYS, CURR_YEAR, CURR_MONTH, CURR_DAY } from '../../utils';
+import { useLoaderData, useNavigate, Link } from 'react-router-dom';
+import { FRONTEND_URL, BACKEND_URL, WEEKDAYS, CURR_YEAR, CURR_MONTH, CURR_DAY } from '../../utils';
 import CalendarBar from '../CalendarBar/CalendarBar';
 import moment from 'moment';
-import './MonthView.css'
-import { useNavigate } from 'react-router-dom';
+import './MonthView.css';
 
 export async function loadMonthEvents(request) {
-    /**
-     * 
     const year = request.params.year;
     const month = request.params.month;
-    const response = await fetch(`${BACKEND_URL}/calendar/month/${year}/${month}`);
-     */
-    return 1;
+    const day = request.params.day;
+    const response = await fetch(`${BACKEND_URL}/calendar/month/${year}/${month}/${day}`);
+    return await response.json();
 }
 
 function MonthView() {
@@ -91,13 +88,33 @@ function MonthView() {
             {rowStartIdxs.map((rowIdx) => (
                 <div className="row" key={`row-start-idx-${rowIdx}`}>
                     {dayVals.slice(rowIdx, rowIdx + 7).map((dayVal) => (
-                        <div className="col border" style={{ height: (rowStartIdxs.length === 5) ? "15vh" : "12.5vh"}} key={`day-${dayVal}`}
+                        <div className="col border" style={{ minHeight: (rowStartIdxs.length === 5) ? "17vh" : "14.25vh"}} key={`day-${dayVal}`}
                         id={dayVal} onClick={event => handleAddEvent(event)}>
                             {/** Day Number */}
                             <div className={(year === CURR_YEAR && month === CURR_MONTH && dayVal === CURR_DAY) ? "curr-day-month" : ""}>
                                 {dayVal > 0 ? dayVal : ""}
                             </div>
                             {/** Events List */}
+                            {monthEvents.filter((value) => value.day === dayVal).slice(0, rowStartIdxs.length === 5 ? 3 : 2).map((monthEvent) => (
+                                <div key={`${monthEvent.day}-${monthEvent.eventName}`} className="event">
+                                    {monthEvent.startTime < 1 ? 
+                                        <p>{(monthEvent.startTime + 12).toString().replace(".", ":")}am</p>
+                                        :
+                                        monthEvent.startTime >= 13 ?
+                                            <p>{(monthEvent.startTime - 12).toString().replace(".", ":")}pm</p>
+                                            :
+                                            <p>{(monthEvent.startTime).toString().replace(".", ":")}am</p>
+                                    }
+                                    <p>{monthEvent.eventName}</p>
+                                </div>
+                            ))}
+                            {monthEvents.filter((value) => value.day === dayVal).length > (rowStartIdxs.length === 5 ? 3 : 2) ?
+                                <Link to={`${FRONTEND_URL}/calendar/day/${year}/${month}/${dayVal}`} className="others">
+                                {monthEvents.filter((value) => value.day === dayVal).length - (rowStartIdxs.length === 5 ? 3 : 2)} other(s)
+                                </Link>
+                                :
+                                null
+                            }
                         </div>
                     ))}
                 </div>

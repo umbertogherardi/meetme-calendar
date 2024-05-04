@@ -27,17 +27,36 @@ function AddEventForm() {
         event.preventDefault();
 
         let startTimeNum = parseFloat(startTime.replace(':', '.'));
-        if (startAM === false) startTimeNum += 12;
+        if (startAM === true) {
+            if (startTimeNum >= 12) {
+                startTimeNum -= 12;
+            }
+        }
+        else {
+            if (startTimeNum >= 1) {
+                startTimeNum += 12;
+            }
+        }
+
         let endTimeNum = parseFloat(endTime.replace(':', '.'));
-        if (endAM === false) endTimeNum += 12;
+        if (endAM === true) {
+            if (endTimeNum >= 12) {
+                endTimeNum -= 12;
+            }
+        }
+        else {
+            if (endTimeNum <= 12) {
+                endTimeNum += 12;
+            }
+        }
 
         const eventData = {
             eventName: eventName,
             year: year,
             month: month,
             day: day,
-            startTime: startTimeNum,
-            endTime: endTimeNum
+            startTime: parseFloat(startTimeNum.toFixed(2)),
+            endTime: parseFloat(endTimeNum.toFixed(2))
         }
 
         console.log(`${BACKEND_URL}/calendar`);

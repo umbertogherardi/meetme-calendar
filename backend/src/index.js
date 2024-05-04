@@ -3,7 +3,6 @@ import cors from "cors";
 import { MongoClient } from "mongodb";
 import CalendarRouter from "../routes/calendar.js"
 import AuthRouter from '../routes/auth.js';
-import User from '../models/User.js';
 
 async function connect() {
   const client = new MongoClient('mongodb://localhost:27017');
