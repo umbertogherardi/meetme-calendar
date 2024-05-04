@@ -95,8 +95,8 @@ function MonthView() {
                                 {dayVal > 0 ? dayVal : ""}
                             </div>
                             {/** Events List */}
-                            {monthEvents.filter((value) => value.day === dayVal).slice(0, rowStartIdxs.length === 5 ? 3 : 2).map((monthEvent) => (
-                                <div key={`${monthEvent.day}-${monthEvent.eventName}`} className="month-event">
+                            {monthEvents.filter((value) => value.day === dayVal).slice(0, rowStartIdxs.length === 5 ? 3 : 2).map((monthEvent, idx) => (
+                                <div key={`${monthEvent.day}-${monthEvent.eventName}-${idx}`} className="month-event">
                                     {monthEvent.startTime < 1 ? 
                                         <p>{(monthEvent.startTime + 12).toString().replace(".", ":")}am</p>
                                         :

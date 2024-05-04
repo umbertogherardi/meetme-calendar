@@ -27,6 +27,11 @@ function AddEventForm() {
         event.preventDefault();
 
         let startTimeNum = parseFloat(startTime.replace(':', '.'));
+        if (startTimeNum > 12.59 || isNaN(startTimeNum)) {
+            setErrorMsg(`Invalid 'Start Time' format. Please enter a valid numerical time and try again.`);
+            return;
+        }
+
         if (startAM === true) {
             if (startTimeNum >= 12) {
                 startTimeNum -= 12;
@@ -39,6 +44,11 @@ function AddEventForm() {
         }
 
         let endTimeNum = parseFloat(endTime.replace(':', '.'));
+        if (endTimeNum > 12.59 || isNaN(endTimeNum)) {
+            setErrorMsg(`Invalid 'End Time' format. Please enter a valid numerical time and try again.`);
+            return;
+        }
+
         if (endAM === true) {
             if (endTimeNum >= 12) {
                 endTimeNum -= 12;
@@ -50,6 +60,16 @@ function AddEventForm() {
             }
         }
 
+        if (startTimeNum >= endTimeNum) {
+            setErrorMsg(`'Start Time' should be earlier than 'End Time'. Please fix these fields and try again.`);
+            return;
+        }
+
+        if (eventName.length < 1) {
+            setErrorMsg(`The 'Event Name' field cannot be left empty. Please fix this field and try again.`);
+            return;
+        }
+
         const eventData = {
             eventName: eventName,
             year: year,
@@ -58,8 +78,6 @@ function AddEventForm() {
             startTime: parseFloat(startTimeNum.toFixed(2)),
             endTime: parseFloat(endTimeNum.toFixed(2))
         }
-
-        console.log(`${BACKEND_URL}/calendar`);
         
         const result = await fetch(`${BACKEND_URL}/calendar`, {
             method: "POST", 

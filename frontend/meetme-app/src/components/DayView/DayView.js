@@ -44,8 +44,8 @@ function DayView() {
                 {day}
             </div>
             {/** Events List */}
-            {dayEvents.map((dayEvent) => (
-                <div key={`${dayEvent.day}-${dayEvent.eventName}`} className="day-event">
+            {dayEvents.map((dayEvent, idx) => (
+                <div key={`${dayEvent.eventName}-${idx}`} className="day-event">
                     <div>
                     </div>
                     {dayEvent.startTime < 1 ? 
