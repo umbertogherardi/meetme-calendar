@@ -97,7 +97,7 @@ function WeekView() {
     return (
         <>
         <CalendarBar year={year} month={month} day={day} viewType="Week"/>
-        <div className="container text-center">
+        <div className="container text-center" style={{marginBottom: "12px"}}>
             {/** Weekday Headers */}
             <div className="row weekday-header">
             {WEEKDAYS.map((weekday) => (

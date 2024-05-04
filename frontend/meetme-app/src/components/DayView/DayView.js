@@ -46,25 +46,25 @@ function DayView() {
             {/** Events List */}
             {dayEvents.map((dayEvent, idx) => (
                 <div key={`${dayEvent.eventName}-${idx}`} className="day-event">
-                    <div>
-                    </div>
+                    <p>
                     {dayEvent.startTime < 1 ? 
-                        <p>{(dayEvent.startTime + 12).toString().replace(".", ":")}am</p>
+                        `${(dayEvent.startTime + 12).toString().replace(".", ":")}am - `
                         :
                         dayEvent.startTime >= 13 ?
-                            <p>{(dayEvent.startTime - 12).toString().replace(".", ":")}pm</p>
+                            `${(dayEvent.startTime - 12).toString().replace(".", ":")}pm - `
                             :
-                            <p>{(dayEvent.startTime).toString().replace(".", ":")}am</p>
+                            `${(dayEvent.startTime).toString().replace(".", ":")}am - `
                     }
-                    -
                     {dayEvent.endTime < 1 ? 
-                        <p>{(dayEvent.endTime + 12).toString().replace(".", ":")}am</p>
+                        `${(dayEvent.endTime + 12).toString().replace(".", ":")}am`
                         :
                         dayEvent.endTime >= 13 ?
-                            <p>{(dayEvent.endTime - 12).toString().replace(".", ":")}pm</p>
+                            `${(dayEvent.endTime - 12).toString().replace(".", ":")}pm`
                             :
-                            <p>{(dayEvent.endTime).toString().replace(".", ":")}am</p>
+                            `${(dayEvent.endTime).toString().replace(".", ":")}am`
                     }
+                    </p>
+                    
                     <p>{dayEvent.eventName}</p>
                 </div>
             ))}
