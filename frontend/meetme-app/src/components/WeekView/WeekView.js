@@ -112,7 +112,7 @@ function WeekView() {
                 {dayVals.map((dayVal) => (
                     <div className="col border weekday" key={dayVal} id={dayVal} onClick={event => handleAddEvent(event)}>
                         {/** Day Number */}
-                        <div className={(year === CURR_YEAR && month === CURR_MONTH && dayVal === CURR_DAY) ? "curr-day-week" : ""}>
+                        <div className={(year === CURR_YEAR && month === CURR_MONTH && dayVal === CURR_DAY) ? "curr-day-week bg-primary" : ""}>
                             {dayVal}
                         </div>
                         {/** Events List */}

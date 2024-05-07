@@ -13,8 +13,8 @@ function Logout() {
 
     return (
         <div className="logout-container">
-            <h2>Log Out</h2>
-            <p>Are you sure you want to log out?</p>
+            <h2>Logout</h2>
+            <p>Are you sure you want to logout?</p>
             <button onClick={handleLogout}>Logout</button>
         </div>
     );

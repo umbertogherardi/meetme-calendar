@@ -91,7 +91,7 @@ function MonthView() {
                         <div className="col border" style={{ minHeight: (rowStartIdxs.length === 5) ? "17vh" : "14.25vh"}} key={`day-${dayVal}`}
                         id={dayVal} onClick={event => handleAddEvent(event)}>
                             {/** Day Number */}
-                            <div className={(year === CURR_YEAR && month === CURR_MONTH && dayVal === CURR_DAY) ? "curr-day-month" : ""}>
+                            <div className={(year === CURR_YEAR && month === CURR_MONTH && dayVal === CURR_DAY) ? "curr-day-month bg-primary" : ""}>
                                 {dayVal > 0 ? dayVal : ""}
                             </div>
                             {/** Events List */}

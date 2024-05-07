@@ -19,9 +19,8 @@ function SignUpForm() {
         try {
             const response = await axios.post(`http://localhost:3001/auth/signup`, { username: email, password });
             // Redirect user to login page after successful signup
-            console.log(response.data)
-            alert("WORKS signup!")
-            navigate('/') //still need to DETERMINE which page to navigate it back too TODO!!!
+            console.log(response.data);
+            navigate('/');
         } catch (error) {
             setError('Failed to sign up');
         }
@@ -44,7 +43,7 @@ function SignUpForm() {
                     <label htmlFor="passwordInput" className="form-label">Password</label>
                     <input type="password" className="form-control" id="passwordInput" value={password} onChange={(e) => setPassword(e.target.value)} required />
                 </div>
-                <button type="submit" className="btn btn-secondary">Sign Up</button>
+                <button type="submit" className="btn btn-primary">Sign Up</button>
             </form>
             <div style={{textAlign: 'center',  marginTop: '2rem'}}>
                 <span>Already have a MeetMe account? </span><Link to={`${FRONTEND_URL}/login`}>Login</Link>

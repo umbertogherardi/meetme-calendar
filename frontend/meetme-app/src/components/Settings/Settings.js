@@ -179,7 +179,7 @@ import { useNavigate } from 'react-router-dom';
 function Settings() {
     const [oldPassword, setOldPassword] = useState('');
     const [newPassword, setNewPassword] = useState('');
-    const [terminatePassword, setTerminatePassword] = useState(''); // Add state for termination password
+    const [deletePassword, setDeletePassword] = useState(''); // Add state for delete password
     const [error, setError] = useState('');
     const navigate = useNavigate();
 
@@ -198,19 +198,19 @@ function Settings() {
             });
     };
 
-    const handleTerminateAccount = () => {
+    const handleDeleteAccount = () => {
         const username = sessionStorage.getItem('username') || ''; // Retrieve username from session storage
-        const confirmTerminate = window.confirm('Are you sure you want to terminate your account?'); // Display confirmation dialog
-        if (confirmTerminate) {
-            axios.post('http://localhost:3001/auth/terminate-account', { username, password: terminatePassword }) // Use terminatePassword for termination
+        const confirmDelete = window.confirm('Are you sure you want to delete your account?'); // Display confirmation dialog
+        if (confirmDelete) {
+            axios.post('http://localhost:3001/auth/terminate-account', { username, password: deletePassword }) // Use terminatePassword for termination
                 .then(response => {
                     console.log(response.data);
-                    alert('Account terminated successfully');
+                    alert('Account deleted successfully');
                     navigate('/')
                 })
                 .catch(error => {
-                    console.error('Error terminating account:', error);
-                    alert('Error terminating account');
+                    console.error('Error deleting account:', error);
+                    alert('Error deleting account');
                 });
         }
     };
@@ -237,12 +237,12 @@ function Settings() {
                 </div>
 
                 <div className="terminate-account-section" style={{ marginTop: '2rem' }}>
-                    <h5>Terminate Account</h5>
+                    <h5>Delete Account</h5>
                     <div className="mb-3">
-                        <label htmlFor="terminatePassword" className="form-label">Password</label>
-                        <input type="password" className="form-control" id="terminatePassword" value={terminatePassword} onChange={e => setTerminatePassword(e.target.value)} />
+                        <label htmlFor="deletePassword" className="form-label">Password</label>
+                        <input type="password" className="form-control" id="deletePassword" value={deletePassword} onChange={e => setDeletePassword(e.target.value)} />
                     </div>
-                    <button type="button" className="btn btn-danger" onClick={handleTerminateAccount}>Terminate Account</button>
+                    <button type="button" className="btn btn-danger" onClick={handleDeleteAccount}>Delete Account</button>
                 </div>
             </form>
         </>

@@ -106,7 +106,7 @@ function LoginForm() {
                     <label htmlFor="passwordInput" className="form-label">Password</label>
                     <input type="password" className="form-control" id="passwordInput" value={password} onChange={(e) => setPassword(e.target.value)} required />
                 </div>
-                <button type="submit" className="btn btn-secondary">Login</button>
+                <button type="submit" className="btn btn-primary">Login</button>
             </form>
             <div style={{ textAlign: 'center', marginTop: '2rem' }}>
                 <span>Don't have a MeetMe account? </span><Link to={`${FRONTEND_URL}/sign-up`}>Sign Up</Link>

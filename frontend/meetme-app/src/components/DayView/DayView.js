@@ -40,7 +40,7 @@ function DayView() {
             {WEEKDAYS[currentMoment.day()]}
         </div>
         <div className="col border day" id={day} onClick={event => handleAddEvent(event)}>
-            <div className={(year === CURR_YEAR && month === CURR_MONTH && day === CURR_DAY) ? "curr-day" : ""}>
+            <div className={(year === CURR_YEAR && month === CURR_MONTH && day === CURR_DAY) ? "curr-day bg-primary" : ""}>
                 {day}
             </div>
             {/** Events List */}
