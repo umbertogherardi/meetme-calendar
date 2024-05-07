@@ -1,21 +1,20 @@
-import { useLoaderData, useNavigate } from 'react-router-dom';
-import { WEEKDAYS, CURR_YEAR, CURR_MONTH, CURR_DAY } from '../../utils';
+import { useLoaderData, useNavigate, Link } from 'react-router-dom';
+import { FRONTEND_URL, BACKEND_URL, WEEKDAYS, CURR_YEAR, CURR_MONTH, CURR_DAY } from '../../utils';
 import CalendarBar from '../CalendarBar/CalendarBar';
 import moment from 'moment';
 import './WeekView.css'
 
 export async function loadWeekEvents(request) {
-    /**
-     * 
     const year = request.params.year;
     const month = request.params.month;
-    const response = await fetch(`${BACKEND_URL}/calendar/month/${year}/${month}`);
-     */
-    return 1;
+    const day = request.params.day;
+    const response = await fetch(`${BACKEND_URL}/calendar/week/${year}/${month}/${day}`);
+    return await response.json();
 }
 
 function WeekView() {
     const weekEvents = useLoaderData();
+    console.log(weekEvents);
 
     const WEEK_SUBSTR = "week/";
     const url = window.location.href;
@@ -60,12 +59,8 @@ function WeekView() {
         let dayVals = [];
         let firstDayOfWeek;
         let startInPrevMonth;
-
-        console.log(weekday);
-        
         if ((day - weekday) <= 0) {
             firstDayOfWeek = daysInPrevMonth + (day - weekday);
-            console.log(firstDayOfWeek);
             startInPrevMonth = true;
         } else {
             firstDayOfWeek = day - weekday;
@@ -92,7 +87,6 @@ function WeekView() {
     }
 
     let dayVals = setDayVals();
-    console.log(dayVals);
 
     return (
         <>
@@ -116,6 +110,19 @@ function WeekView() {
                             {dayVal}
                         </div>
                         {/** Events List */}
+                        {weekEvents.filter((value) => value.day === dayVal).map((weekEvent, idx) => (
+                                <div key={weekEvent._id} className="month-event">
+                                    {weekEvent.startTime < 1 ? 
+                                        <p>{(weekEvent.startTime + 12).toString().replace(".", ":")}am</p>
+                                        :
+                                        weekEvent.startTime >= 13 ?
+                                            <p>{(weekEvent.startTime - 12).toString().replace(".", ":")}pm</p>
+                                            :
+                                            <p>{(weekEvent.startTime).toString().replace(".", ":")}am</p>
+                                    }
+                                    <p>{weekEvent.eventName}</p>
+                                </div>
+                            ))}
                     </div>
                 ))}
             </div>
