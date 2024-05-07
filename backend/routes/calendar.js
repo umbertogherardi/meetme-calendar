@@ -135,4 +135,14 @@ CalendarRouter.delete('/:eventId', async (req, res) => {
     return res.json(deletedEvent);
 })
 
+CalendarRouter.patch('/:eventId', async (req, res) => {
+    const db = req.app.get("db");
+    const {eventName, startTime, endTime} = req.body;
+
+    const updatedEvent = await db.collection("events").updateOne({ _id: new ObjectId(`${req.params.eventId}`) }, 
+    { $set: {eventName: eventName, startTime: parseInt(startTime), endTime: parseInt(endTime)} });
+
+    return res.json(updatedEvent);
+})
+
 export default CalendarRouter;

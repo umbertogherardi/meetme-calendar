@@ -119,8 +119,8 @@ function WeekView() {
                                     {weekEvent.startTime < 1 ? 
                                         <p>{(weekEvent.startTime + 12).toFixed(2).toString().replace(".", ":")}am</p>
                                         :
-                                        weekEvent.startTime >= 13 ?
-                                            <p>{(weekEvent.startTime - 12).toFixed(2).toString().replace(".", ":")}pm</p>
+                                        weekEvent.startTime >= 12 ?
+                                            <p>{(weekEvent.startTime - (weekEvent.startTime >= 13 ? 12 : 0)).toFixed(2).toString().replace(".", ":")}pm</p>
                                             :
                                             <p>{(weekEvent.startTime).toFixed(2).toString().replace(".", ":")}am</p>
                                     }

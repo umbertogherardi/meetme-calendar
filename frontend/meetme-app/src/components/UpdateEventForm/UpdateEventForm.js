@@ -1,5 +1,4 @@
 import { useState } from "react";
-import moment from 'moment';
 import { BACKEND_URL, MONTHS } from "../../utils";
 import { useLoaderData, useNavigate } from "react-router-dom";
 import './UpdateEventForm.css';
@@ -10,46 +9,37 @@ export async function loadEvent(request) {
 }
 
 function UpdateEventForm() {
-    const event = useLoaderData();
+    const updatingEvent = useLoaderData();
 
-    const [eventName, setEventName] = useState(event.eventName);
+    const [eventName, setEventName] = useState(updatingEvent.eventName);
     const [startTime, setStartTime] = useState(
-        event.startTime < 1 ? 
-            `${(event.startTime + 12).toFixed(2).toString().replace(".", ":")}`
+        updatingEvent.startTime < 1 ? 
+            `${(updatingEvent.startTime + 12).toFixed(2).toString().replace(".", ":")}`
             :
-            event.startTime >= 13 ?
-                `${(event.startTime - 12).toFixed(2).toString().replace(".", ":")}`
+            updatingEvent.startTime >= 12 ?
+                `${(updatingEvent.startTime - (updatingEvent.startTime >= 13 ? 12 : 0)).toFixed(2).toString().replace(".", ":")}`
                 :
-                `${(event.startTime).toFixed(2).toString().replace(".", ":")}`
+                `${(updatingEvent.startTime).toFixed(2).toString().replace(".", ":")}`
     );
 
     const [endTime, setEndTime] = useState(
-        event.endTime < 1 ? 
-            `${(event.endTime + 12).toFixed(2).toString().replace(".", ":")}`
+        updatingEvent.endTime < 1 ? 
+            `${(updatingEvent.endTime + 12).toFixed(2).toString().replace(".", ":")}`
             :
-            event.endTime >= 13 ?
-                `${(event.endTime - 12).toFixed(2).toString().replace(".", ":")}`
+            updatingEvent.endTime >= 12 ?
+                `${(updatingEvent.endTime - (updatingEvent.endTime >= 13 ? 12 : 0)).toFixed(2).toString().replace(".", ":")}`
                 :
-                `${(event.endTime).toFixed(2).toString().replace(".", ":")}`
+                `${(updatingEvent.endTime).toFixed(2).toString().replace(".", ":")}`
     );
 
-    const [startAM, setStartAM] = useState(event.startTime >= 13);
-    const [endAM, setEndAM] = useState(event.endTime >= 13);
+    const [startAM, setStartAM] = useState(!(updatingEvent.startTime >= 12));
+    const [endAM, setEndAM] = useState(!(updatingEvent.endTime >= 12));
     const [errorMsg, setErrorMsg] = useState("");
-
-    const MONTH_SUBSTR = "event-add/";
-    const url = window.location.href;
-    
-    const currentMoment = moment(`${event.year}/${event.month}/${event.day}`, "YYYY/MM/DD");
-    const year = currentMoment.year();
-    // add 1 since moment months are zero-indexed
-    const month = currentMoment.month() + 1;
-    const day = currentMoment.date();
 
     let navigate = useNavigate();
 
     async function deleteEvent() {
-        await fetch(`${BACKEND_URL}/calendar/${event._id}`, {
+        await fetch(`${BACKEND_URL}/calendar/${updatingEvent._id}`, {
             method: "DELETE",
             mode: 'cors',
             headers: {
@@ -62,6 +52,7 @@ function UpdateEventForm() {
 
     async function updateEvent(event) {
         event.preventDefault();
+        setErrorMsg('');
 
         let startTimeNum = parseFloat(startTime.replace(':', '.'));
         if (startTimeNum > 12.59 || isNaN(startTimeNum)) {
@@ -75,7 +66,7 @@ function UpdateEventForm() {
             }
         }
         else {
-            if (startTimeNum >= 1) {
+            if (12 > startTimeNum >= 1) {
                 startTimeNum += 12;
             }
         }
@@ -92,7 +83,7 @@ function UpdateEventForm() {
             }
         }
         else {
-            if (endTimeNum <= 12) {
+            if (endTimeNum < 12) {
                 endTimeNum += 12;
             }
         }
@@ -109,16 +100,12 @@ function UpdateEventForm() {
 
         const eventData = {
             eventName: eventName,
-            year: year,
-            month: month,
-            day: day,
             startTime: parseFloat(startTimeNum.toFixed(2)),
             endTime: parseFloat(endTimeNum.toFixed(2))
         }
         
-        // PATCH not POST
-        const result = await fetch(`${BACKEND_URL}/calendar`, {
-            method: "POST", 
+        const result = await fetch(`${BACKEND_URL}/calendar/${updatingEvent._id}`, {
+            method: "PATCH", 
             body: JSON.stringify(eventData),
             mode: 'cors',
             headers: {
@@ -126,17 +113,17 @@ function UpdateEventForm() {
             }
         }); 
 
-        if (result.status === 201) {
+        if (result.status === 200) {
             navigate(-1);
         } else {
-            setErrorMsg(`Error creating event. Received ${result.status}`);
+            setErrorMsg(`Error updating event. Received ${result.status}`);
         }
     }
 
     return (
     <>
     <form className="update-form" onSubmit={updateEvent}>
-        <h4>Event on {MONTHS[month]} {day}, {year}</h4>
+        <h4>Event on {MONTHS[updatingEvent.month]} {updatingEvent.day}, {updatingEvent.year}</h4>
         <div className="mb-3">
             <label htmlFor="eventNameInput" className="form-label">Event Name</label>
             <input 
@@ -152,9 +139,9 @@ function UpdateEventForm() {
                     value={startTime}>    
                 </input>
                 <div className="btn-group" role="group" aria-label="Start time AM/PM toggle radio buton group">
-                    <input type="radio" className="btn-check" name="btnradio-start" id="btnradio-am-start" autoComplete="off" defaultChecked={event.startTime < 12} onChange={() => setStartAM(true)}></input>
+                    <input type="radio" className="btn-check" name="btnradio-start" id="btnradio-am-start" autoComplete="off" defaultChecked={updatingEvent.startTime < 12} onChange={() => setStartAM(true)}></input>
                     <label className="btn btn-outline-primary" htmlFor="btnradio-am-start">AM</label>
-                    <input type="radio" className="btn-check" name="btnradio-start" id="btnradio-pm-start" autoComplete="off" defaultChecked={event.startTime >= 13} onChange={() => setStartAM(false)}></input>
+                    <input type="radio" className="btn-check" name="btnradio-start" id="btnradio-pm-start" autoComplete="off" defaultChecked={updatingEvent.startTime >= 12} onChange={() => setStartAM(false)}></input>
                     <label className="btn btn-outline-primary" htmlFor="btnradio-pm-start">PM</label>
                 </div>
             </div>
@@ -167,9 +154,9 @@ function UpdateEventForm() {
                     value={endTime}>
                 </input>
                 <div className="btn-group" role="group" aria-label="End time AM/PM toggle radio buton group">
-                    <input type="radio" className="btn-check" name="btnradio-end" id="btnradio-am-end" autoComplete="off" defaultChecked={event.endTime < 12} onChange={() => setEndAM(true)}></input>
+                    <input type="radio" className="btn-check" name="btnradio-end" id="btnradio-am-end" autoComplete="off" defaultChecked={updatingEvent.endTime < 12} onChange={() => setEndAM(true)}></input>
                     <label className="btn btn-outline-primary" htmlFor="btnradio-am-end">AM</label>
-                    <input type="radio" className="btn-check" name="btnradio-end" id="btnradio-pm-end" autoComplete="off" defaultChecked={event.endTime >= 13} onChange={() => setEndAM(false)}></input>
+                    <input type="radio" className="btn-check" name="btnradio-end" id="btnradio-pm-end" autoComplete="off" defaultChecked={updatingEvent.endTime >= 12} onChange={() => setEndAM(false)}></input>
                     <label className="btn btn-outline-primary" htmlFor="btnradio-pm-end">PM</label>
                 </div>
             </div>

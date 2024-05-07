@@ -53,16 +53,16 @@ function DayView() {
                     {dayEvent.startTime < 1 ? 
                         `${(dayEvent.startTime + 12).toFixed(2).toString().replace(".", ":")}am - `
                         :
-                        dayEvent.startTime >= 13 ?
-                            `${(dayEvent.startTime - 12).toFixed(2).toString().replace(".", ":")}pm - `
+                        dayEvent.startTime >= 12 ?
+                            `${(dayEvent.startTime - (dayEvent.startTime >= 13 ? 12 : 0)).toFixed(2).toString().replace(".", ":")}pm - `
                             :
                             `${(dayEvent.startTime).toFixed(2).toString().replace(".", ":")}am - `
                     }
                     {dayEvent.endTime < 1 ? 
                         `${(dayEvent.endTime + 12).toFixed(2).toString().replace(".", ":")}am`
                         :
-                        dayEvent.endTime >= 13 ?
-                            `${(dayEvent.endTime - 12).toFixed(2).toString().replace(".", ":")}pm`
+                        dayEvent.endTime >= 12 ?
+                            `${(dayEvent.endTime - (dayEvent.endTime >= 13 ? 12 : 0)).toFixed(2).toString().replace(".", ":")}pm`
                             :
                             `${(dayEvent.endTime).toFixed(2).toString().replace(".", ":")}am`
                     }

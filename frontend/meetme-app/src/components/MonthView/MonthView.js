@@ -104,8 +104,8 @@ function MonthView() {
                                     {monthEvent.startTime < 1 ? 
                                         <p>{(monthEvent.startTime + 12).toFixed(2).toString().replace(".", ":")}am</p>
                                         :
-                                        monthEvent.startTime >= 13 ?
-                                            <p>{(monthEvent.startTime - 12).toFixed(2).toString().replace(".", ":")}pm</p>
+                                        monthEvent.startTime >= 12 ?
+                                            <p>{(monthEvent.startTime - (monthEvent.startTime >= 13 ? 12 : 0)).toFixed(2).toString().replace(".", ":")}pm</p>
                                             :
                                             <p>{(monthEvent.startTime).toFixed(2).toString().replace(".", ":")}am</p>
                                     }
