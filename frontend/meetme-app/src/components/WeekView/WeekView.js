@@ -43,16 +43,20 @@ function WeekView() {
 
     function handleAddEvent(event) {
         const eventDay = event.target.id;
-        // case where we add to the previous month
-        if (eventDay > (day + (6 - weekday))) {
-            navigate(`/calendar/event-add/${year}/${month - 1}/${eventDay}`);
+        
+        // Only add an event if we don't click on an event
+        if (event.target.id !== '') {
+            // case where we add to the previous month
+            if (eventDay > (day + (6 - weekday))) {
+                navigate(`/calendar/event-add/${year}/${month - 1}/${eventDay}`);
+            }
+            // case where we add to the next month
+            else if (eventDay < (day - weekday)) {
+                navigate(`/calendar/event-add/${year}/${month + 1}/${eventDay}`);
+            }
+            // case where we add to the current month
+            else navigate(`/calendar/event-add/${year}/${month}/${eventDay}`);
         }
-        // case where we add to the next month
-        else if (eventDay < (day - weekday)) {
-            navigate(`/calendar/event-add/${year}/${month + 1}/${eventDay}`);
-        }
-        // case where we add to the current month
-        else navigate(`/calendar/event-add/${year}/${month}/${eventDay}`);
     }
 
     function setDayVals() {
@@ -110,18 +114,18 @@ function WeekView() {
                             {dayVal}
                         </div>
                         {/** Events List */}
-                        {weekEvents.filter((value) => value.day === dayVal).map((weekEvent, idx) => (
-                                <div key={weekEvent._id} className="month-event">
+                        {weekEvents.filter((value) => value.day === dayVal).map((weekEvent) => (
+                                <Link to={`${FRONTEND_URL}/calendar/event-update/${weekEvent._id}`} key={weekEvent._id} className="week-event">
                                     {weekEvent.startTime < 1 ? 
-                                        <p>{(weekEvent.startTime + 12).toString().replace(".", ":")}am</p>
+                                        <p>{(weekEvent.startTime + 12).toFixed(2).toString().replace(".", ":")}am</p>
                                         :
                                         weekEvent.startTime >= 13 ?
-                                            <p>{(weekEvent.startTime - 12).toString().replace(".", ":")}pm</p>
+                                            <p>{(weekEvent.startTime - 12).toFixed(2).toString().replace(".", ":")}pm</p>
                                             :
-                                            <p>{(weekEvent.startTime).toString().replace(".", ":")}am</p>
+                                            <p>{(weekEvent.startTime).toFixed(2).toString().replace(".", ":")}am</p>
                                     }
                                     <p>{weekEvent.eventName}</p>
-                                </div>
+                                </Link>
                             ))}
                     </div>
                 ))}

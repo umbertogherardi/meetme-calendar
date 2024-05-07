@@ -1,5 +1,6 @@
 import express from "express";
 import moment from "moment";
+import { ObjectId } from "mongodb";
 
 const CalendarRouter = express.Router();
 
@@ -120,5 +121,18 @@ CalendarRouter.get('/day/:year/:month/:day', async (req, res) => {
     return res.json(dayEvents);
 })
 
+CalendarRouter.get('/:eventId', async (req, res) => {
+    const db = req.app.get("db");
+
+    const event = await db.collection("events").findOne({ _id: new ObjectId(`${req.params.eventId}`) });
+    return res.json(event);
+})
+
+CalendarRouter.delete('/:eventId', async (req, res) => {
+    const db = req.app.get("db");
+
+    const deletedEvent = await db.collection("events").deleteOne({ _id: new ObjectId(`${req.params.eventId}`) });
+    return res.json(deletedEvent);
+})
 
 export default CalendarRouter;

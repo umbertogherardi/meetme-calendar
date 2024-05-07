@@ -15,6 +15,8 @@
     border-radius: 16px;
     margin: 14px 280px 14px 280px;
     overflow: clip;
+    text-decoration: none;
+    color: black;
 }
 
 .day-event:hover {

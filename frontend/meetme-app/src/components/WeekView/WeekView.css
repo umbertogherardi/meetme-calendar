@@ -9,3 +9,27 @@
 .weekday {
     height: 85vh;
 }
+
+.week-event {
+    padding: 0 4px 0 10px;
+    display: flex;
+    gap: 12px;
+    font-size: small;
+    border-radius: 16px;
+    margin-top: 2px;
+    max-height: 20px;
+    overflow: clip;
+    text-decoration: none;
+    color: black;
+}
+
+.week-event:hover {
+    background-color: rgb(211, 211, 211);
+    transition: 0.3s;
+    cursor: pointer;
+}
+
+.week-event p {
+    margin: 0;
+    padding: 0;
+}

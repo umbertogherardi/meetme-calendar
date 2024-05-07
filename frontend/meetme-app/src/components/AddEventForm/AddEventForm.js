@@ -70,6 +70,8 @@ function AddEventForm() {
             return;
         }
 
+        console.log(startTimeNum);
+
         const eventData = {
             eventName: eventName,
             year: year,

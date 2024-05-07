@@ -1,5 +1,5 @@
-import { useLoaderData, useNavigate } from 'react-router-dom';
-import { BACKEND_URL, WEEKDAYS, CURR_YEAR, CURR_MONTH, CURR_DAY } from '../../utils';
+import { useLoaderData, useNavigate, Link } from 'react-router-dom';
+import { FRONTEND_URL, BACKEND_URL, WEEKDAYS, CURR_YEAR, CURR_MONTH, CURR_DAY } from '../../utils';
 import CalendarBar from '../CalendarBar/CalendarBar';
 import moment from 'moment';
 
@@ -30,7 +30,10 @@ function DayView() {
     const navigate = useNavigate();
 
     function handleAddEvent(event) {
-        navigate(`/calendar/event-add/${year}/${month}/${event.target.id}`);
+        // Only add an event if we don't click on an event
+        if (event.target.id !== '') {
+            navigate(`/calendar/event-add/${year}/${month}/${event.target.id}`);
+        }
     }
 
     return (
@@ -44,29 +47,29 @@ function DayView() {
                 {day}
             </div>
             {/** Events List */}
-            {dayEvents.map((dayEvent, idx) => (
-                <div key={dayEvent._id} className="day-event">
+            {dayEvents.map((dayEvent) => (
+                <Link to={`${FRONTEND_URL}/calendar/event-update/${dayEvent._id}`} key={dayEvent._id} className="day-event">
                     <p>
                     {dayEvent.startTime < 1 ? 
-                        `${(dayEvent.startTime + 12).toString().replace(".", ":")}am - `
+                        `${(dayEvent.startTime + 12).toFixed(2).toString().replace(".", ":")}am - `
                         :
                         dayEvent.startTime >= 13 ?
-                            `${(dayEvent.startTime - 12).toString().replace(".", ":")}pm - `
+                            `${(dayEvent.startTime - 12).toFixed(2).toString().replace(".", ":")}pm - `
                             :
-                            `${(dayEvent.startTime).toString().replace(".", ":")}am - `
+                            `${(dayEvent.startTime).toFixed(2).toString().replace(".", ":")}am - `
                     }
                     {dayEvent.endTime < 1 ? 
-                        `${(dayEvent.endTime + 12).toString().replace(".", ":")}am`
+                        `${(dayEvent.endTime + 12).toFixed(2).toString().replace(".", ":")}am`
                         :
                         dayEvent.endTime >= 13 ?
-                            `${(dayEvent.endTime - 12).toString().replace(".", ":")}pm`
+                            `${(dayEvent.endTime - 12).toFixed(2).toString().replace(".", ":")}pm`
                             :
-                            `${(dayEvent.endTime).toString().replace(".", ":")}am`
+                            `${(dayEvent.endTime).toFixed(2).toString().replace(".", ":")}am`
                     }
                     </p>
                     
                     <p>{dayEvent.eventName}</p>
-                </div>
+                </Link>
             ))}
         </div>
         </>

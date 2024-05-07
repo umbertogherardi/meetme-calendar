@@ -20,6 +20,8 @@
     margin-top: 2px;
     max-height: 20px;
     overflow: clip;
+    text-decoration: none;
+    color: black;
 }
 
 .month-event:hover {

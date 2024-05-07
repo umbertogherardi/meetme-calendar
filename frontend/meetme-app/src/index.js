@@ -13,6 +13,7 @@ import WeekView, { loadWeekEvents } from './components/WeekView/WeekView';
 import DayView, { loadDayEvents } from './components/DayView/DayView';
 import Logout from './components/Logout/Logout';
 import AddEventForm from './components/AddEventForm/AddEventForm';
+import UpdateEventForm, { loadEvent } from './components/UpdateEventForm/UpdateEventForm';
 
 const router = createBrowserRouter([
   {
@@ -56,6 +57,11 @@ const router = createBrowserRouter([
           {
             path: "event-add/:year/:month/:day",
             element: <AddEventForm />
+          },
+          {
+            path: "event-update/:eventId",
+            element: <UpdateEventForm />,
+            loader: loadEvent
           },
         ]
       },

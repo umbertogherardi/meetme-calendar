@@ -30,8 +30,12 @@ function MonthView() {
     const navigate = useNavigate();
 
     function handleAddEvent(event) {
-        const eventDay = event.target.id
+        const eventDay = event.target.id;
         if (event.target.id > 0) navigate(`/calendar/event-add/${year}/${month}/${eventDay}`);
+    }
+
+    function handleUpdateEvent(event) {
+
     }
 
     function setDayVals() {
@@ -95,18 +99,18 @@ function MonthView() {
                                 {dayVal > 0 ? dayVal : ""}
                             </div>
                             {/** Events List */}
-                            {monthEvents.filter((value) => value.day === dayVal).slice(0, rowStartIdxs.length === 5 ? 3 : 2).map((monthEvent, idx) => (
-                                <div key={monthEvent._id} className="month-event">
+                            {monthEvents.filter((value) => value.day === dayVal).slice(0, rowStartIdxs.length === 5 ? 3 : 2).map((monthEvent) => (
+                                <Link to={`${FRONTEND_URL}/calendar/event-update/${monthEvent._id}`} key={monthEvent._id} className="month-event">
                                     {monthEvent.startTime < 1 ? 
-                                        <p>{(monthEvent.startTime + 12).toString().replace(".", ":")}am</p>
+                                        <p>{(monthEvent.startTime + 12).toFixed(2).toString().replace(".", ":")}am</p>
                                         :
                                         monthEvent.startTime >= 13 ?
-                                            <p>{(monthEvent.startTime - 12).toString().replace(".", ":")}pm</p>
+                                            <p>{(monthEvent.startTime - 12).toFixed(2).toString().replace(".", ":")}pm</p>
                                             :
-                                            <p>{(monthEvent.startTime).toString().replace(".", ":")}am</p>
+                                            <p>{(monthEvent.startTime).toFixed(2).toString().replace(".", ":")}am</p>
                                     }
                                     <p>{monthEvent.eventName}</p>
-                                </div>
+                                </Link>
                             ))}
                             {monthEvents.filter((value) => value.day === dayVal).length > (rowStartIdxs.length === 5 ? 3 : 2) ?
                                 <Link to={`${FRONTEND_URL}/calendar/day/${year}/${month}/${dayVal}`} className="others">
