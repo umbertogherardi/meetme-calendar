@@ -29,16 +29,10 @@ function WeekView() {
     const weekday = currentMoment.weekday();
     
     const daysInMonth = currentMoment.daysInMonth();
-    const firstDayOfMonth = currentMoment.startOf('month').day();
 
     const daysInPrevMonth = (month === 1 ? 
         moment(`${year - 1}/${12}/${day}`, "YYYY/MM/DD").daysInMonth() : 
         moment(`${year}/${month - 1}/${day}`, "YYYY/MM/DD").daysInMonth()
-    );
-
-    const daysInNextMonth = (month === 12 ? 
-            moment(`${year + 1}/${1}/${day}`, "YYYY/MM/DD").daysInMonth() : 
-            moment(`${year}/${month + 1}/${day}`, "YYYY/MM/DD").daysInMonth()
     );
 
     const navigate = useNavigate();
@@ -47,17 +41,21 @@ function WeekView() {
         const eventDay = event.target.id;
         
         // Only add an event if we don't click on an event
-        if ((event.target.id > 0) && (username === sessionStorage.getItem('username'))) {
-            // case where we add to the previous month
-            if (eventDay > (day + (6 - weekday))) {
-                navigate(`/calendar/${username}/event-add/${year}/${month - 1}/${eventDay}`);
+        if (event.target.id > 0) {
+            if (username === sessionStorage.getItem('username')) {
+                // case where we add to the previous month
+                if (eventDay > (day + (6 - weekday))) {
+                    navigate(`/calendar/${username}/event-add/${year}/${month - 1}/${eventDay}`);
+                }
+                // case where we add to the next month
+                else if (eventDay < (day - weekday)) {
+                    navigate(`/calendar/${username}/event-add/${year}/${month + 1}/${eventDay}`);
+                }
+                // case where we add to the current month
+                else navigate(`/calendar/${username}/event-add/${year}/${month}/${eventDay}`);
+            } else {
+                alert(`You do not have permission to edit ${username}'s calendar.`);
             }
-            // case where we add to the next month
-            else if (eventDay < (day - weekday)) {
-                navigate(`/calendar/${username}/event-add/${year}/${month + 1}/${eventDay}`);
-            }
-            // case where we add to the current month
-            else navigate(`/calendar/${username}/event-add/${year}/${month}/${eventDay}`);
         }
     }
 

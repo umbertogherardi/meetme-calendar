@@ -34,7 +34,13 @@ function MonthView() {
 
     function handleAddEvent(event) {
         const eventDay = event.target.id;
-        if ((event.target.id > 0) && (username === sessionStorage.getItem('username'))) navigate(`/calendar/${username}/event-add/${year}/${month}/${eventDay}`);
+        if (event.target.id > 0){
+            if (username === sessionStorage.getItem('username')) {
+                navigate(`/calendar/${username}/event-add/${year}/${month}/${eventDay}`);
+            } else {
+                alert(`You do not have permission to edit ${username}'s calendar.`);
+            }
+        } 
     }
 
     function setDayVals() {

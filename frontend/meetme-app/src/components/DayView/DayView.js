@@ -27,15 +27,17 @@ function DayView() {
     // add 1 since moment months are zero-indexed
     const month = currentMoment.month() + 1;
     const day = currentMoment.date();
-    
-    const dayOfWeek = currentMoment.day();
 
     const navigate = useNavigate();
 
     function handleAddEvent(event) {
         // Only add an event if we don't click on an event
-        if ((event.target.id > 0) && (username === sessionStorage.getItem('username'))) {
-            navigate(`/calendar/${username}/event-add/${year}/${month}/${event.target.id}`);
+        if (event.target.id > 0) {
+            if (username === sessionStorage.getItem('username')) {
+                navigate(`/calendar/${username}/event-add/${year}/${month}/${event.target.id}`);
+            } else {
+                alert(`You do not have permission to edit ${username}'s calendar.`);
+            }
         }
     }
 
