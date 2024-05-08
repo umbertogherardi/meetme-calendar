@@ -1,6 +1,5 @@
 import { NavLink, useLocation } from 'react-router-dom';
-import { FRONTEND_URL, CURR_YEAR, CURR_MONTH, CURR_DAY } from '../../utils';
-import { useState, useEffect } from 'react';
+import { CURR_YEAR, CURR_MONTH, CURR_DAY } from '../../utils';
 
 function Navbar() {
     const location = useLocation();
@@ -10,14 +9,13 @@ function Navbar() {
     const isLoggedIn = sessionStorage.getItem('isLoggedIn');
 
     const tabs = [
-        { path: `/calendar/month/${CURR_YEAR}/${CURR_MONTH}/${CURR_DAY}`, label: 'Calendar' },
+        { path: `/calendar/${sessionStorage.getItem('username')}/month/${CURR_YEAR}/${CURR_MONTH}/${CURR_DAY}`, label: 'Calendar' },
         { path: '/contacts', label: 'Contacts' },
         { path: '/settings', label: 'Settings' },
-        // { path: '/', label: isLoggedIn ? 'Logout' : 'Login' }
         { path: '/logout', label: 'Logout'}
     ];
 
-    // Dont think this function is necessary
+    // Don't think this function is necessary
     const handleLogout = () => {
         const confirmLogout = window.confirm('Are you sure you want to logout?');
         if (confirmLogout) {

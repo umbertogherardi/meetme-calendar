@@ -71,6 +71,7 @@ function AddEventForm() {
         }
 
         const eventData = {
+            username: sessionStorage.getItem('username'),
             eventName: eventName,
             year: year,
             month: month,

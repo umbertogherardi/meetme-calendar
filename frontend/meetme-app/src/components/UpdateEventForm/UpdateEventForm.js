@@ -3,8 +3,11 @@ import { BACKEND_URL, MONTHS } from "../../utils";
 import { useLoaderData, useNavigate } from "react-router-dom";
 import './UpdateEventForm.css';
 
+let username = '';
+
 export async function loadEvent(request) {
-    const response = await fetch(`${BACKEND_URL}/calendar/${request.params.eventId}`);
+    username = request.params.username;
+    const response = await fetch(`${BACKEND_URL}/calendar/${username}/${request.params.eventId}`);
     return await response.json();
 }
 
@@ -39,7 +42,7 @@ function UpdateEventForm() {
     let navigate = useNavigate();
 
     async function deleteEvent() {
-        await fetch(`${BACKEND_URL}/calendar/${updatingEvent._id}`, {
+        await fetch(`${BACKEND_URL}/calendar/${username}/${updatingEvent._id}`, {
             method: "DELETE",
             mode: 'cors',
             headers: {
@@ -107,7 +110,7 @@ function UpdateEventForm() {
             endTime: parseFloat(endTimeNum.toFixed(2))
         }
         
-        const result = await fetch(`${BACKEND_URL}/calendar/${updatingEvent._id}`, {
+        const result = await fetch(`${BACKEND_URL}/calendar/${sessionStorage.getItem('username')}/${updatingEvent._id}`, {
             method: "PATCH", 
             body: JSON.stringify(eventData),
             mode: 'cors',

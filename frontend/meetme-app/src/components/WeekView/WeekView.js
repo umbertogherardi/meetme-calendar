@@ -4,17 +4,19 @@ import CalendarBar from '../CalendarBar/CalendarBar';
 import moment from 'moment';
 import './WeekView.css'
 
+let username = '';
+
 export async function loadWeekEvents(request) {
     const year = request.params.year;
     const month = request.params.month;
     const day = request.params.day;
-    const response = await fetch(`${BACKEND_URL}/calendar/week/${year}/${month}/${day}`);
+    username = request.params.username;
+    const response = await fetch(`${BACKEND_URL}/calendar/${username}/week/${year}/${month}/${day}`);
     return await response.json();
 }
 
 function WeekView() {
     const weekEvents = useLoaderData();
-    console.log(weekEvents);
 
     const WEEK_SUBSTR = "week/";
     const url = window.location.href;
@@ -45,17 +47,17 @@ function WeekView() {
         const eventDay = event.target.id;
         
         // Only add an event if we don't click on an event
-        if (event.target.id !== '') {
+        if ((event.target.id > 0) && (username === sessionStorage.getItem('username'))) {
             // case where we add to the previous month
             if (eventDay > (day + (6 - weekday))) {
-                navigate(`/calendar/event-add/${year}/${month - 1}/${eventDay}`);
+                navigate(`/calendar/${username}/event-add/${year}/${month - 1}/${eventDay}`);
             }
             // case where we add to the next month
             else if (eventDay < (day - weekday)) {
-                navigate(`/calendar/event-add/${year}/${month + 1}/${eventDay}`);
+                navigate(`/calendar/${username}/event-add/${year}/${month + 1}/${eventDay}`);
             }
             // case where we add to the current month
-            else navigate(`/calendar/event-add/${year}/${month}/${eventDay}`);
+            else navigate(`/calendar/${username}/event-add/${year}/${month}/${eventDay}`);
         }
     }
 
@@ -94,7 +96,7 @@ function WeekView() {
 
     return (
         <>
-        <CalendarBar year={year} month={month} day={day} viewType="Week"/>
+        <CalendarBar year={year} month={month} day={day} username={username} viewType="Week"/>
         <div className="container text-center" style={{marginBottom: "12px"}}>
             {/** Weekday Headers */}
             <div className="row weekday-header">
@@ -115,7 +117,7 @@ function WeekView() {
                         </div>
                         {/** Events List */}
                         {weekEvents.filter((value) => value.day === dayVal).map((weekEvent) => (
-                                <Link to={`${FRONTEND_URL}/calendar/event-update/${weekEvent._id}`} key={weekEvent._id} className="week-event">
+                                <Link to={username === sessionStorage.getItem('username') ? `${FRONTEND_URL}/calendar/${username}/event-update/${weekEvent._id}` : null} key={weekEvent._id} className="week-event">
                                     {weekEvent.startTime < 1 ? 
                                         <p>{(weekEvent.startTime + 12).toFixed(2).toString().replace(".", ":")}am</p>
                                         :

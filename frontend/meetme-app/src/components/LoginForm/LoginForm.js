@@ -85,7 +85,7 @@ function LoginForm() {
             console.log(response.data);
             sessionStorage.setItem('isLoggedIn', true);
             sessionStorage.setItem('username', username); // Store username in session storage
-            navigate(`/calendar/month/${CURR_YEAR}/${CURR_MONTH}/${CURR_DAY}`); // Redirect to calendar page
+            navigate(`/calendar/${username}/month/${CURR_YEAR}/${CURR_MONTH}/${CURR_DAY}`); // Redirect to calendar page
         } catch (error) {
             setError('Invalid username or password');
         }

@@ -1,5 +1,5 @@
 import { Link, useLoaderData, useNavigate } from "react-router-dom";
-import { BACKEND_URL } from "../../utils";
+import { BACKEND_URL, CURR_YEAR, CURR_MONTH, CURR_DAY } from "../../utils";
 
 export async function loadContacts() {
     const username = sessionStorage.getItem('username');
@@ -36,7 +36,7 @@ function Contacts() {
                 <div className="card-body">
                     <h5 className="card-title">Contact {index + 1}</h5>
                     <p className="card-text">{contact.contactUsername}</p>
-                    <Link to="#" className="btn btn-primary">View Calendar</Link>
+                    <Link to={`/calendar/${contact.contactUsername}/month/${CURR_YEAR}/${CURR_MONTH}/${CURR_DAY}`} className="btn btn-primary">View Calendar</Link>
                 </div>
             </div>
             ))}

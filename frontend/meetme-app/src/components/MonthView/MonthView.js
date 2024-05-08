@@ -4,11 +4,14 @@ import CalendarBar from '../CalendarBar/CalendarBar';
 import moment from 'moment';
 import './MonthView.css';
 
+let username = '';
+
 export async function loadMonthEvents(request) {
     const year = request.params.year;
     const month = request.params.month;
     const day = request.params.day;
-    const response = await fetch(`${BACKEND_URL}/calendar/month/${year}/${month}/${day}`);
+    username = request.params.username;
+    const response = await fetch(`${BACKEND_URL}/calendar/${username}/month/${year}/${month}/${day}`);
     return await response.json();
 }
 
@@ -31,7 +34,7 @@ function MonthView() {
 
     function handleAddEvent(event) {
         const eventDay = event.target.id;
-        if (event.target.id > 0) navigate(`/calendar/event-add/${year}/${month}/${eventDay}`);
+        if ((event.target.id > 0) && (username === sessionStorage.getItem('username'))) navigate(`/calendar/${username}/event-add/${year}/${month}/${eventDay}`);
     }
 
     function setDayVals() {
@@ -73,7 +76,7 @@ function MonthView() {
 
     return (
         <>
-        <CalendarBar year={year} month={month} day={day} viewType="Month"/>
+        <CalendarBar year={year} month={month} day={day} username={username} viewType="Month"/>
         <div className="container text-center" style={{marginBottom: "12px"}}>
             {/** Weekday Headers */}
             <div className="row weekday-header">
@@ -96,7 +99,7 @@ function MonthView() {
                             </div>
                             {/** Events List */}
                             {monthEvents.filter((value) => value.day === dayVal).slice(0, rowStartIdxs.length === 5 ? 3 : 2).map((monthEvent) => (
-                                <Link to={`${FRONTEND_URL}/calendar/event-update/${monthEvent._id}`} key={monthEvent._id} className="month-event">
+                                <Link to={username === sessionStorage.getItem('username') ? `${FRONTEND_URL}/calendar/${username}/event-update/${monthEvent._id}` : null} key={monthEvent._id} className="month-event">
                                     {monthEvent.startTime < 1 ? 
                                         <p>{(monthEvent.startTime + 12).toFixed(2).toString().replace(".", ":")}am</p>
                                         :
@@ -109,7 +112,7 @@ function MonthView() {
                                 </Link>
                             ))}
                             {monthEvents.filter((value) => value.day === dayVal).length > (rowStartIdxs.length === 5 ? 3 : 2) ?
-                                <Link to={`${FRONTEND_URL}/calendar/day/${year}/${month}/${dayVal}`} className="others">
+                                <Link to={`${FRONTEND_URL}/calendar/${username}/day/${year}/${month}/${dayVal}`} className="others">
                                 {monthEvents.filter((value) => value.day === dayVal).length - (rowStartIdxs.length === 5 ? 3 : 2)} other(s)
                                 </Link>
                                 :

@@ -15,16 +15,16 @@ CalendarRouter.post('/', async (req, res) => {
     }
 })
 
-CalendarRouter.get('/month/:year/:month/:day', async (req, res) => {
+CalendarRouter.get('/:username/month/:year/:month/:day', async (req, res) => {
     const db = req.app.get("db");
 
     const monthEvents = await db.collection("events")
-                                .find({ year: parseInt(req.params.year), month: parseInt(req.params.month) })
+                                .find({ year: parseInt(req.params.year), month: parseInt(req.params.month), username: req.params.username })
                                 .sort({ startTime: 1 }).toArray();
     return res.json(monthEvents);
 })
 
-CalendarRouter.get('/week/:year/:month/:day', async (req, res) => {
+CalendarRouter.get('/:username/week/:year/:month/:day', async (req, res) => {
     const db = req.app.get("db");
     const year = parseInt(req.params.year);
     const month = parseInt(req.params.month);
@@ -53,17 +53,17 @@ CalendarRouter.get('/week/:year/:month/:day', async (req, res) => {
         // Get events from prev month
         if (month == 1) {
             prevMonthWeekEvents = await db.collection("events")
-                .find({ year: year - 1, month: 12, day: { $gte: lowerBoundPrevMonth, $lte: upperBoundPrevMonth } })
+                .find({ year: year - 1, month: 12, day: { $gte: lowerBoundPrevMonth, $lte: upperBoundPrevMonth }, username: req.params.username })
                 .sort({ startTime: 1 }).toArray();
         } else {
             prevMonthWeekEvents = await db.collection("events")
-                .find({ year: year, month: month - 1, day: { $gte: lowerBoundPrevMonth, $lte: upperBoundPrevMonth } })
+                .find({ year: year, month: month - 1, day: { $gte: lowerBoundPrevMonth, $lte: upperBoundPrevMonth }, username: req.params.username })
                 .sort({ startTime: 1 }).toArray();
         }
 
         // Get events from current month
         const currMonthWeekEvents = await db.collection("events")
-            .find({ year: year, month: month, day: { $gte: lowerBoundCurrMonth, $lte: upperBoundCurrMonth } })
+            .find({ year: year, month: month, day: { $gte: lowerBoundCurrMonth, $lte: upperBoundCurrMonth }, username: req.params.username })
             .sort({ startTime: 1 }).toArray();
 
         weekEvents = prevMonthWeekEvents.concat(currMonthWeekEvents);
@@ -86,17 +86,17 @@ CalendarRouter.get('/week/:year/:month/:day', async (req, res) => {
         // Get events from prev month
         if (month == 12) {
             nextMonthWeekEvents = await db.collection("events")
-                .find({ year: year + 1, month: 1, day: { $gte: lowerBoundNextMonth, $lte: upperBoundNextMonth } })
+                .find({ year: year + 1, month: 1, day: { $gte: lowerBoundNextMonth, $lte: upperBoundNextMonth }, username: req.params.username })
                 .sort({ startTime: 1 }).toArray();
         } else {
             nextMonthWeekEvents = await db.collection("events")
-                .find({ year: year, month: month + 1, day: { $gte: lowerBoundNextMonth, $lte: upperBoundNextMonth } })
+                .find({ year: year, month: month + 1, day: { $gte: lowerBoundNextMonth, $lte: upperBoundNextMonth }, username: req.params.username })
                 .sort({ startTime: 1 }).toArray();
         }
 
         // Get events from current month
         const currMonthWeekEvents = await db.collection("events")
-            .find({ year: year, month: month, day: { $gte: lowerBoundCurrMonth, $lte: upperBoundCurrMonth } })
+            .find({ year: year, month: month, day: { $gte: lowerBoundCurrMonth, $lte: upperBoundCurrMonth }, username: req.params.username })
             .sort({ startTime: 1 }).toArray();
 
         weekEvents = nextMonthWeekEvents.concat(currMonthWeekEvents);
@@ -105,41 +105,41 @@ CalendarRouter.get('/week/:year/:month/:day', async (req, res) => {
         const lowerBound = day - dayOfWeek;
         const upperBound = day + (6 - dayOfWeek);
         weekEvents = await db.collection("events")
-            .find({ year: year, month: month, day: { $gte: lowerBound, $lte: upperBound } })
+            .find({ year: year, month: month, day: { $gte: lowerBound, $lte: upperBound }, username: req.params.username })
             .sort({ startTime: 1 }).toArray();
     }
 
     return res.json(weekEvents);
 })
 
-CalendarRouter.get('/day/:year/:month/:day', async (req, res) => {
+CalendarRouter.get('/:username/day/:year/:month/:day', async (req, res) => {
     const db = req.app.get("db");
 
     const dayEvents = await db.collection("events")
-                                .find({ year: parseInt(req.params.year), month: parseInt(req.params.month), day: parseInt(req.params.day) })
+                                .find({ year: parseInt(req.params.year), month: parseInt(req.params.month), day: parseInt(req.params.day), username: req.params.username })
                                 .sort({ startTime: 1 }).toArray();
     return res.json(dayEvents);
 })
 
-CalendarRouter.get('/:eventId', async (req, res) => {
+CalendarRouter.get('/:username/:eventId', async (req, res) => {
     const db = req.app.get("db");
 
-    const event = await db.collection("events").findOne({ _id: new ObjectId(`${req.params.eventId}`) });
+    const event = await db.collection("events").findOne({ _id: new ObjectId(`${req.params.eventId}`), username: req.params.username });
     return res.json(event);
 })
 
-CalendarRouter.delete('/:eventId', async (req, res) => {
+CalendarRouter.delete('/:username/:eventId', async (req, res) => {
     const db = req.app.get("db");
 
-    const deletedEvent = await db.collection("events").deleteOne({ _id: new ObjectId(`${req.params.eventId}`) });
+    const deletedEvent = await db.collection("events").deleteOne({ _id: new ObjectId(`${req.params.eventId}`), username: req.params.username });
     return res.json(deletedEvent);
 })
 
-CalendarRouter.patch('/:eventId', async (req, res) => {
+CalendarRouter.patch('/:username/:eventId', async (req, res) => {
     const db = req.app.get("db");
     const {eventName, startTime, endTime} = req.body;
 
-    const updatedEvent = await db.collection("events").updateOne({ _id: new ObjectId(`${req.params.eventId}`) }, 
+    const updatedEvent = await db.collection("events").updateOne({ _id: new ObjectId(`${req.params.eventId}`), username: req.params.username }, 
     { $set: {eventName: eventName, startTime: parseFloat(startTime), endTime: parseFloat(endTime)} });
 
     return res.json(updatedEvent);

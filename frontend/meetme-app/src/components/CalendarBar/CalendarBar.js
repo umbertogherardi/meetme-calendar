@@ -8,6 +8,7 @@ function CalendarBar(props) {
     const month = props.month;
     const day = props.day;
     const viewType = props.viewType;
+    const username = props.username;
 
     const daysInMonth = moment(`${year}/${month}/${day}`, "YYYY/MM/DD").daysInMonth();
     const daysInPrevMonth = (month === 1 ? 
@@ -32,7 +33,7 @@ function CalendarBar(props) {
                 </span>
                 <ul className="navbar-nav">
                     <li className="nav-item">
-                    <Link to={`${FRONTEND_URL}/calendar/${viewType.toLowerCase()}/${CURR_YEAR}/${CURR_MONTH}/${CURR_DAY}`}>
+                    <Link to={`${FRONTEND_URL}/calendar/${username}/${viewType.toLowerCase()}/${CURR_YEAR}/${CURR_MONTH}/${CURR_DAY}`}>
                         <button className="btn btn-light" type="button">
                             Today
                         </button>
@@ -43,12 +44,12 @@ function CalendarBar(props) {
                         {viewType === "Month" ?
                         <Link to={day > daysInPrevMonth ?
                                     month === 1 ? 
-                                        `${FRONTEND_URL}/calendar/month/${year - 1}/${12}/${daysInPrevMonth}` : 
-                                        `${FRONTEND_URL}/calendar/month/${year}/${month - 1}/${daysInPrevMonth}`
+                                        `${FRONTEND_URL}/calendar/${username}/month/${year - 1}/${12}/${daysInPrevMonth}` : 
+                                        `${FRONTEND_URL}/calendar/${username}/month/${year}/${month - 1}/${daysInPrevMonth}`
                                     :
                                     month === 1 ? 
-                                        `${FRONTEND_URL}/calendar/month/${year - 1}/${12}/${day}` : 
-                                        `${FRONTEND_URL}/calendar/month/${year}/${month - 1}/${day}`
+                                        `${FRONTEND_URL}/calendar/${username}/month/${year - 1}/${12}/${day}` : 
+                                        `${FRONTEND_URL}/calendar/${username}/month/${year}/${month - 1}/${day}`
                                 }>
                             <button className="btn btn-light" type="button">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-arrow-left" viewBox="0 0 16 16">
@@ -60,10 +61,10 @@ function CalendarBar(props) {
                         viewType === "Week" ?
                         <Link to={day <= 7 ? 
                             month === 1 ?
-                                `${FRONTEND_URL}/calendar/week/${year - 1}/${12}/${daysInPrevMonth - (7 - day)}` : 
-                                `${FRONTEND_URL}/calendar/week/${year}/${month - 1}/${daysInPrevMonth - (7 - day)}` 
+                                `${FRONTEND_URL}/calendar/${username}/week/${year - 1}/${12}/${daysInPrevMonth - (7 - day)}` : 
+                                `${FRONTEND_URL}/calendar/${username}/week/${year}/${month - 1}/${daysInPrevMonth - (7 - day)}` 
                             :
-                            `${FRONTEND_URL}/calendar/week/${year}/${month}/${day - 7}`
+                            `${FRONTEND_URL}/calendar/${username}/week/${year}/${month}/${day - 7}`
                             }>
                             <button className="btn btn-light" type="button">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-arrow-left" viewBox="0 0 16 16">
@@ -74,10 +75,10 @@ function CalendarBar(props) {
                         :
                         <Link to={day === 1 ? 
                                     month === 1 ?
-                                        `${FRONTEND_URL}/calendar/day/${year - 1}/${12}/${daysInPrevMonth}` : 
-                                        `${FRONTEND_URL}/calendar/day/${year}/${month - 1}/${daysInPrevMonth}` 
+                                        `${FRONTEND_URL}/calendar/${username}/day/${year - 1}/${12}/${daysInPrevMonth}` : 
+                                        `${FRONTEND_URL}/calendar/${username}/day/${year}/${month - 1}/${daysInPrevMonth}` 
                                     :
-                                    `${FRONTEND_URL}/calendar/day/${year}/${month}/${day - 1}`
+                                    `${FRONTEND_URL}/calendar/${username}/day/${year}/${month}/${day - 1}`
                                     }>
                             <button className="btn btn-light" type="button">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-arrow-left" viewBox="0 0 16 16">
@@ -93,12 +94,12 @@ function CalendarBar(props) {
                         {viewType === "Month" ?
                         <Link to={day > daysInNextMonth ?
                                     month === 12 ? 
-                                        `${FRONTEND_URL}/calendar/month/${year + 1}/${1}/${daysInNextMonth}` : 
-                                        `${FRONTEND_URL}/calendar/month/${year}/${month + 1}/${daysInNextMonth}`
+                                        `${FRONTEND_URL}/calendar/${username}/month/${year + 1}/${1}/${daysInNextMonth}` : 
+                                        `${FRONTEND_URL}/calendar/${username}/month/${year}/${month + 1}/${daysInNextMonth}`
                                     :
                                     month === 12 ?
-                                        `${FRONTEND_URL}/calendar/month/${year + 1}/${1}/${day}` : 
-                                        `${FRONTEND_URL}/calendar/month/${year}/${month + 1}/${day}`
+                                        `${FRONTEND_URL}/calendar/${username}/month/${year + 1}/${1}/${day}` : 
+                                        `${FRONTEND_URL}/calendar/${username}/month/${year}/${month + 1}/${day}`
                                 }>
                             <button className="btn btn-light" type="button">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-arrow-right" viewBox="0 0 16 16">
@@ -110,10 +111,10 @@ function CalendarBar(props) {
                         viewType === "Week" ?
                         <Link to={day > (daysInMonth - 7) ?    
                                     month === 12 ?
-                                        `${FRONTEND_URL}/calendar/week/${year + 1}/${1}/${day - (daysInMonth - 7)}` : 
-                                        `${FRONTEND_URL}/calendar/week/${year}/${month + 1}/${day - (daysInMonth - 7)}` 
+                                        `${FRONTEND_URL}/calendar/${username}/week/${year + 1}/${1}/${day - (daysInMonth - 7)}` : 
+                                        `${FRONTEND_URL}/calendar/${username}/week/${year}/${month + 1}/${day - (daysInMonth - 7)}` 
                                     :
-                                    `${FRONTEND_URL}/calendar/week/${year}/${month}/${day + 7}`
+                                    `${FRONTEND_URL}/calendar/${username}/week/${year}/${month}/${day + 7}`
                                     }>
                             <button className="btn btn-light" type="button">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-arrow-right" viewBox="0 0 16 16">
@@ -124,10 +125,10 @@ function CalendarBar(props) {
                         :
                         <Link to={day === daysInMonth ?
                                     month === 12 ? 
-                                        `${FRONTEND_URL}/calendar/day/${year + 1}/${1}/${1}` : 
-                                        `${FRONTEND_URL}/calendar/day/${year}/${month + 1}/${1}`
+                                        `${FRONTEND_URL}/calendar/${username}/day/${year + 1}/${1}/${1}` : 
+                                        `${FRONTEND_URL}/calendar/${username}/day/${year}/${month + 1}/${1}`
                                     :
-                                    `${FRONTEND_URL}/calendar/day/${year}/${month}/${day + 1}`
+                                    `${FRONTEND_URL}/calendar/${username}/day/${year}/${month}/${day + 1}`
                                 }>
                             <button className="btn btn-light" type="button">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-arrow-right" viewBox="0 0 16 16">
@@ -143,9 +144,9 @@ function CalendarBar(props) {
                                 {viewType}
                             </button>
                             <ul className="dropdown-menu">
-                                <li><Link to={`${FRONTEND_URL}/calendar/month/${year}/${month}/${day}`} className="dropdown-item">Month</Link></li>
-                                <li><Link to={`${FRONTEND_URL}/calendar/week/${year}/${month}/${day}`} className="dropdown-item">Week</Link></li>
-                                <li><Link to={`${FRONTEND_URL}/calendar/day/${year}/${month}/${day}`} className="dropdown-item">Day</Link></li>
+                                <li><Link to={`${FRONTEND_URL}/calendar/${username}/month/${year}/${month}/${day}`} className="dropdown-item">Month</Link></li>
+                                <li><Link to={`${FRONTEND_URL}/calendar/${username}/week/${year}/${month}/${day}`} className="dropdown-item">Week</Link></li>
+                                <li><Link to={`${FRONTEND_URL}/calendar/${username}/day/${year}/${month}/${day}`} className="dropdown-item">Day</Link></li>
                             </ul>
                         </div>
                     </li>

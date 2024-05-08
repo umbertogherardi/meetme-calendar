@@ -38,7 +38,7 @@ const router = createBrowserRouter([
         element: <SignUpForm />
       },
       {
-        path: "/calendar",
+        path: "/calendar/:username",
         children: [
           {
             path: "month/:year/:month/:day",

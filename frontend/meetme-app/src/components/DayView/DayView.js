@@ -5,11 +5,14 @@ import moment from 'moment';
 
 import './DayView.css'
 
+let username = '';
+
 export async function loadDayEvents(request) {
     const year = request.params.year;
     const month = request.params.month;
     const day = request.params.day;
-    const response = await fetch(`${BACKEND_URL}/calendar/day/${year}/${month}/${day}`);
+    username = request.params.username;
+    const response = await fetch(`${BACKEND_URL}/calendar/${username}/day/${year}/${month}/${day}`);
     return await response.json();
 }
 
@@ -31,14 +34,14 @@ function DayView() {
 
     function handleAddEvent(event) {
         // Only add an event if we don't click on an event
-        if (event.target.id !== '') {
-            navigate(`/calendar/event-add/${year}/${month}/${event.target.id}`);
+        if ((event.target.id > 0) && (username === sessionStorage.getItem('username'))) {
+            navigate(`/calendar/${username}/event-add/${year}/${month}/${event.target.id}`);
         }
     }
 
     return (
         <>
-        <CalendarBar year={year} month={month} day={day} viewType="Day"/>
+        <CalendarBar year={year} month={month} day={day} username={username} viewType="Day"/>
         <div className="weekday-header single-header">
             {WEEKDAYS[currentMoment.day()]}
         </div>
@@ -48,7 +51,7 @@ function DayView() {
             </div>
             {/** Events List */}
             {dayEvents.map((dayEvent) => (
-                <Link to={`${FRONTEND_URL}/calendar/event-update/${dayEvent._id}`} key={dayEvent._id} className="day-event">
+                <Link to={username === sessionStorage.getItem('username') ? `${FRONTEND_URL}/calendar/${username}/event-update/${dayEvent._id}` : null} key={dayEvent._id} className="day-event">
                     <p>
                     {dayEvent.startTime < 1 ? 
                         `${(dayEvent.startTime + 12).toFixed(2).toString().replace(".", ":")}am - `
