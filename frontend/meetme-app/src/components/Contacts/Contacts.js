@@ -1,9 +1,19 @@
-import { Link } from "react-router-dom";
+import { Link, useLoaderData, useNavigate } from "react-router-dom";
+import { BACKEND_URL } from "../../utils";
+
+export async function loadContacts() {
+    const username = sessionStorage.getItem('username');
+    const response = await fetch(`${BACKEND_URL}/contacts/${username}`);
+    return await response.json();
+}
 
 function Contacts() {
+    const contactsList = useLoaderData();
 
-    function addContact() {
-        console.log("Contact added!");
+    const navigate = useNavigate();
+
+    function handleAddContact() {
+        navigate('/contacts-add');
     }
 
     return (
@@ -13,7 +23,7 @@ function Contacts() {
                 <span className="navbar-brand">Contacts</span>
                 <ul className="navbar-nav">
                     <li className="nav-item">
-                        <button className="btn btn-light" type="button" onClick={addContact}>
+                        <button className="btn btn-light" type="button" onClick={handleAddContact}>
                             Add Contact
                         </button>
                     </li>
@@ -21,55 +31,15 @@ function Contacts() {
             </div>
         </nav>
         <div style={{display: "flex", flexWrap: "wrap", margin: "2rem 6.5rem", gap: "1rem"}}>
-            <div className="card" style={{width: "18rem"}}>
+            {contactsList.map((contact, index) => (
+            <div className="card" style={{width: "18rem"}} key={contact.contactUsername}>
                 <div className="card-body">
-                    <h5 className="card-title">Contact 1</h5>
-                    <p className="card-text">contact1@gmail.com</p>
-                    <Link to="#" className="btn btn-secondary">View Calendar</Link>
+                    <h5 className="card-title">Contact {index + 1}</h5>
+                    <p className="card-text">{contact.contactUsername}</p>
+                    <Link to="#" className="btn btn-primary">View Calendar</Link>
                 </div>
             </div>
-            <div className="card" style={{width: "18rem"}}>
-                <div className="card-body">
-                    <h5 className="card-title">Contact 2</h5>
-                    <p className="card-text">contact2@gmail.com</p>
-                    <Link to="#" className="btn btn-secondary">View Calendar</Link>
-                </div>
-            </div>
-            <div className="card" style={{width: "18rem"}}>
-                <div className="card-body">
-                    <h5 className="card-title">Contact 3</h5>
-                    <p className="card-text">contact3@gmail.com</p>
-                    <Link to="#" className="btn btn-secondary">View Calendar</Link>
-                </div>
-            </div>
-            <div className="card" style={{width: "18rem"}}>
-                <div className="card-body">
-                    <h5 className="card-title">Contact 4</h5>
-                    <p className="card-text">contact4@gmail.com</p>
-                    <Link to="#" className="btn btn-secondary">View Calendar</Link>
-                </div>
-            </div>
-            <div className="card" style={{width: "18rem"}}>
-                <div className="card-body">
-                    <h5 className="card-title">Contact 5</h5>
-                    <p className="card-text">contact5@gmail.com</p>
-                    <Link to="#" className="btn btn-secondary">View Calendar</Link>
-                </div>
-            </div>
-            <div className="card" style={{width: "18rem"}}>
-                <div className="card-body">
-                    <h5 className="card-title">Contact 6</h5>
-                    <p className="card-text">contact6@gmail.com</p>
-                    <Link to="#" className="btn btn-secondary">View Calendar</Link>
-                </div>
-            </div>
-            <div className="card" style={{width: "18rem"}}>
-                <div className="card-body">
-                    <h5 className="card-title">Contact 7</h5>
-                    <p className="card-text">contact7@gmail.com</p>
-                    <Link to="#" className="btn btn-secondary">View Calendar</Link>
-                </div>
-            </div>
+            ))}
         </div>
     </>
     );

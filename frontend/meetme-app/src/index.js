@@ -7,13 +7,14 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import LoginForm from './components/LoginForm/LoginForm';
 import SignUpForm from './components/SignUpForm/SignUpForm';
 import MonthView, { loadMonthEvents } from './components/MonthView/MonthView';
-import Contacts from './components/Contacts/Contacts';
+import Contacts, { loadContacts } from './components/Contacts/Contacts';
 import Settings from './components/Settings/Settings';
 import WeekView, { loadWeekEvents } from './components/WeekView/WeekView';
 import DayView, { loadDayEvents } from './components/DayView/DayView';
 import Logout from './components/Logout/Logout';
 import AddEventForm from './components/AddEventForm/AddEventForm';
 import UpdateEventForm, { loadEvent } from './components/UpdateEventForm/UpdateEventForm';
+import AddContactForm from './components/AddContactForm/AddContactForm';
 
 const router = createBrowserRouter([
   {
@@ -67,11 +68,16 @@ const router = createBrowserRouter([
       },
       {
         path: "/contacts",
-        element: <Contacts />
+        element: <Contacts />, 
+        loader: loadContacts,
       },
       {
         path: "/settings",
         element: <Settings />
+      },
+      {
+        path: "/contacts-add",
+        element: <AddContactForm />
       }
     ]
   }

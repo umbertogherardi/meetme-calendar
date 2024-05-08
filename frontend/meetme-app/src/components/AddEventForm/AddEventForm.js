@@ -38,7 +38,7 @@ function AddEventForm() {
             }
         }
         else {
-            if (12 > startTimeNum >= 1) {
+            if ((startTimeNum >= 1) && (startTimeNum < 12)) {
                 startTimeNum += 12;
             }
         }
@@ -55,7 +55,7 @@ function AddEventForm() {
             }
         }
         else {
-            if (endTimeNum < 12) {
+            if ((endTimeNum >= 1) && (endTimeNum < 12)) {
                 endTimeNum += 12;
             }
         }

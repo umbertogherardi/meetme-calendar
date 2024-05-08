@@ -2,6 +2,7 @@ import express from "express";
 import cors from "cors";
 import { MongoClient } from "mongodb";
 import CalendarRouter from "../routes/calendar.js"
+import ContactRouter from "../routes/contacts.js"
 import AuthRouter from '../routes/auth.js';
 
 async function connect() {
@@ -9,8 +10,6 @@ async function connect() {
   const connection = await client.connect();
   return connection.db("meetme-db");
 }
-
-// Look at moment.js for calendar displays
 
 const port = 3001;
 
@@ -22,6 +21,8 @@ app.use(express.json());
 app.use('/auth', AuthRouter);
 
 app.use('/calendar', CalendarRouter);
+
+app.use('/contacts', ContactRouter);
 
 const database = await connect();
 app.set("db", database);
