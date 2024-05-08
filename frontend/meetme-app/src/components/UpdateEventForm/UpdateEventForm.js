@@ -101,9 +101,6 @@ function UpdateEventForm() {
             return;
         }
 
-        console.log(startTimeNum);
-        console.log(endTimeNum);
-
         const eventData = {
             eventName: eventName,
             startTime: parseFloat(startTimeNum.toFixed(2)),

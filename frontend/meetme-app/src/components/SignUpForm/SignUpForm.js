@@ -19,7 +19,6 @@ function SignUpForm() {
         try {
             const response = await axios.post(`http://localhost:3001/auth/signup`, { username: email, password });
             // Redirect user to login page after successful signup
-            console.log(response.data);
             navigate('/');
         } catch (error) {
             setError('Failed to sign up');

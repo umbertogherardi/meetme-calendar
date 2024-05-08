@@ -172,7 +172,7 @@
 
 
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
@@ -187,7 +187,6 @@ function Settings() {
         const username = sessionStorage.getItem('username') || ''; // Retrieve username from session storage
         axios.post('http://localhost:3001/auth/change-password', { username, oldPassword, newPassword })
             .then(response => {
-                console.log(response.data);
                 alert('Password changed successfully');
                 setOldPassword('');
                 setNewPassword('');
@@ -204,7 +203,6 @@ function Settings() {
         if (confirmDelete) {
             axios.post('http://localhost:3001/auth/terminate-account', { username, password: deletePassword }) // Use terminatePassword for termination
                 .then(response => {
-                    console.log(response.data);
                     alert('Account deleted successfully');
                     navigate('/')
                 })
