@@ -34,10 +34,6 @@ function MonthView() {
         if (event.target.id > 0) navigate(`/calendar/event-add/${year}/${month}/${eventDay}`);
     }
 
-    function handleUpdateEvent(event) {
-
-    }
-
     function setDayVals() {
         let dayVals = [];
         let bufferIdx = 1;

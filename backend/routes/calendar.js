@@ -140,7 +140,7 @@ CalendarRouter.patch('/:eventId', async (req, res) => {
     const {eventName, startTime, endTime} = req.body;
 
     const updatedEvent = await db.collection("events").updateOne({ _id: new ObjectId(`${req.params.eventId}`) }, 
-    { $set: {eventName: eventName, startTime: parseInt(startTime), endTime: parseInt(endTime)} });
+    { $set: {eventName: eventName, startTime: parseFloat(startTime), endTime: parseFloat(endTime)} });
 
     return res.json(updatedEvent);
 })

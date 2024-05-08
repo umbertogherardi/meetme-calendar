@@ -66,7 +66,7 @@ function UpdateEventForm() {
             }
         }
         else {
-            if (12 > startTimeNum >= 1) {
+            if ((startTimeNum >= 1) && (startTimeNum < 12)) {
                 startTimeNum += 12;
             }
         }
@@ -83,7 +83,7 @@ function UpdateEventForm() {
             }
         }
         else {
-            if (endTimeNum < 12) {
+            if ((endTimeNum >= 1) && (endTimeNum < 12)) {
                 endTimeNum += 12;
             }
         }
@@ -97,6 +97,9 @@ function UpdateEventForm() {
             setErrorMsg(`The 'Event Name' field cannot be left empty. Please fix this field and try again.`);
             return;
         }
+
+        console.log(startTimeNum);
+        console.log(endTimeNum);
 
         const eventData = {
             eventName: eventName,
